@@ -1,4 +1,4 @@
-**I no longer maintain Erbele. We can all choose from many better text editors for macOS these days.**
+**I no longer maintain Erbele. We can choose from many better text editors for macOS these days.**
 
 # Erbele
 

@@ -64,8 +64,6 @@
 	
 	NSMenuItem *menuFormRepresentation;
 	
-	NSImage *saveImage, *openDocumentImage, *newImage, *closeImage, *advancedFindImage, *previewImage, *functionImage, *infoImage;
-	
 	// FRADocumentViewsControllerCategory
 	IBOutlet NSView *viewSelectionView;
 	IBOutlet NSSlider *viewSelectionSizeSlider;

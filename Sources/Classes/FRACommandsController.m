@@ -457,26 +457,17 @@ static id sharedInstance = nil;
 {
     if ([itemIdentifier isEqualToString:@"NewCommandCollectionToolbarItem"]) {
         
-		NSImage *newCommandCollectionImage = [[NSImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"FRANewCollectionIcon" ofType:@"pdf" inDirectory:@"Toolbar Icons"]];
-		[[newCommandCollectionImage representations][0] setAlpha:YES];
-		
-		return [NSToolbarItem createToolbarItemWithIdentifier:itemIdentifier name:NEW_COLLECTION_STRING image:newCommandCollectionImage action:@selector(newCollectionAction:) tag:0 target:self];
+		return [NSToolbarItem createToolbarItemWithIdentifier:itemIdentifier name:NEW_COLLECTION_STRING symbolName:@"folder.badge.plus" action:@selector(newCollectionAction:) tag:0 target:self];
 		
 		
 	} else if ([itemIdentifier isEqualToString:@"NewCommandToolbarItem"]) {
         
-		NSImage *newCommandImage = [[NSImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"FRANewIcon" ofType:@"pdf" inDirectory:@"Toolbar Icons"]];
-		[[newCommandImage representations][0] setAlpha:YES];
-		
-		return [NSToolbarItem createToolbarItemWithIdentifier:itemIdentifier name:NSLocalizedStringFromTable(@"New Command", @"Localizable3", @"New Command") image:newCommandImage action:@selector(newCommandAction:) tag:0 target:self];
+		return [NSToolbarItem createToolbarItemWithIdentifier:itemIdentifier name:NSLocalizedStringFromTable(@"New Command", @"Localizable3", @"New Command") symbolName:@"doc.badge.plus" action:@selector(newCommandAction:) tag:0 target:self];
         
 		
 	} else if ([itemIdentifier isEqualToString:@"RunCommandToolbarItem"]) {
         
-		NSImage *runCommandImage = [[NSImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"FRARunIcon" ofType:@"pdf" inDirectory:@"Toolbar Icons"]];
-		[[runCommandImage representations][0] setAlpha:YES];
-		
-		return [NSToolbarItem createToolbarItemWithIdentifier:itemIdentifier name:NSLocalizedStringFromTable(@"Run", @"Localizable3", @"Run") image:runCommandImage action:@selector(runAction:) tag:0 target:self];
+		return [NSToolbarItem createToolbarItemWithIdentifier:itemIdentifier name:NSLocalizedStringFromTable(@"Run", @"Localizable3", @"Run") symbolName:@"play.fill" action:@selector(runAction:) tag:0 target:self];
         
 		
 		

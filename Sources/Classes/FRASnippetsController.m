@@ -320,18 +320,12 @@ static id sharedInstance = nil;
 {
     if ([itemIdentifier isEqualToString:@"NewSnippetCollectionToolbarItem"]) {
         
-		NSImage *newSnippetCollectionImage = [[NSImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"FRANewCollectionIcon" ofType:@"pdf" inDirectory:@"Toolbar Icons"]];
-		[[newSnippetCollectionImage representations][0] setAlpha:YES];
-		
-		return [NSToolbarItem createToolbarItemWithIdentifier:itemIdentifier name:NEW_COLLECTION_STRING image:newSnippetCollectionImage action:@selector(newCollectionAction:) tag:0 target:self];
+		return [NSToolbarItem createToolbarItemWithIdentifier:itemIdentifier name:NEW_COLLECTION_STRING symbolName:@"folder.badge.plus" action:@selector(newCollectionAction:) tag:0 target:self];
 		
 		
 	} else if ([itemIdentifier isEqualToString:@"NewSnippetToolbarItem"]) {
         
-		NSImage *newSnippetImage = [[NSImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"FRANewIcon" ofType:@"pdf" inDirectory:@"Toolbar Icons"]];
-		[[newSnippetImage representations][0] setAlpha:YES];
-		
-		return [NSToolbarItem createToolbarItemWithIdentifier:itemIdentifier name:NSLocalizedStringFromTable(@"New Snippet", @"Localizable3", @"New Snippet") image:newSnippetImage action:@selector(newSnippetAction:) tag:0 target:self];
+		return [NSToolbarItem createToolbarItemWithIdentifier:itemIdentifier name:NSLocalizedStringFromTable(@"New Snippet", @"Localizable3", @"New Snippet") symbolName:@"doc.badge.plus" action:@selector(newSnippetAction:) tag:0 target:self];
 		
 		
 	} else if ([itemIdentifier isEqualToString:@"FilterSnippetsToolbarItem"]) {

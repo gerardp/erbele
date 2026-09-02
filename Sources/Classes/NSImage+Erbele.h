@@ -16,6 +16,10 @@
 
 @interface NSImage (NSImageErbele)
 
++ (NSImage *)toolbarSymbolNamed:(NSString *)symbolName label:(NSString *)label;
+
++ (NSImage *)preferencesSymbolNamed:(NSString *)symbolName label:(NSString *)label;
+
 + (NSArray *)iconsForPath:(NSString *)path;
 
 + (NSArray *)quickLookIconForPath:(NSString *)path;

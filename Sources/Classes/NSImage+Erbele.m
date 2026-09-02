@@ -15,7 +15,36 @@
 #import "FRAVariousPerformer.h"
 #import <CoreImage/CoreImage.h>
 
+// The point sizes at which SF Symbols are drawn in each of the two kinds of toolbar the
+// application has: the small textured buttons of the project, commands and snippets windows,
+// and the larger items of the preferences window. Both are the largest size at which every
+// symbol in use still fits its button without being scaled down, so that all of them keep the
+// optical weight they were designed with.
+static const CGFloat FRAToolbarSymbolPointSize = 14.0;
+static const CGFloat FRAPreferencesSymbolPointSize = 20.0;
+
+static NSImage *FRASymbolImage(NSString *symbolName, NSString *label, CGFloat pointSize)
+{
+	NSImage *image = [NSImage imageWithSystemSymbolName:symbolName accessibilityDescription:label];
+	NSImageSymbolConfiguration *configuration = [NSImageSymbolConfiguration configurationWithPointSize:pointSize weight:NSFontWeightRegular];
+	
+	return [image imageWithSymbolConfiguration:configuration];
+}
+
+
 @implementation NSImage (NSImageErbele)
+
++ (NSImage *)toolbarSymbolNamed:(NSString *)symbolName label:(NSString *)label
+{
+	return FRASymbolImage(symbolName, label, FRAToolbarSymbolPointSize);
+}
+
+
++ (NSImage *)preferencesSymbolNamed:(NSString *)symbolName label:(NSString *)label
+{
+	return FRASymbolImage(symbolName, label, FRAPreferencesSymbolPointSize);
+}
+
 
 + (NSArray *)iconsForPath:(NSString *)path
 {

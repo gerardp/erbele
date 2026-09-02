@@ -75,8 +75,6 @@
 		7F9809D20B73B4E1000A9140 /* FRADocumentIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 7F9809BC0B73B4E1000A9140 /* FRADocumentIcon.icns */; };
 		7F9809DB0B73B4E1000A9140 /* FRAProjectIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 7F9809C50B73B4E1000A9140 /* FRAProjectIcon.icns */; };
 		7F980A410B73B4F4000A9140 /* Syntax Definitions in Resources */ = {isa = PBXBuildFile; fileRef = 7F9809E70B73B4F4000A9140 /* Syntax Definitions */; };
-		7F980A420B73B4F4000A9140 /* Toolbar Icons in Resources */ = {isa = PBXBuildFile; fileRef = 7F980A230B73B4F4000A9140 /* Toolbar Icons */; };
-		7F980A610B73B5B9000A9140 /* Preferences Icons in Resources */ = {isa = PBXBuildFile; fileRef = 7F980A510B73B5B9000A9140 /* Preferences Icons */; };
 		7F980A970B73B660000A9140 /* SyntaxDefinitions.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7F980A930B73B660000A9140 /* SyntaxDefinitions.plist */; };
 		7F980A980B73B660000A9140 /* DefaultSnippets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7F980A940B73B660000A9140 /* DefaultSnippets.plist */; };
 		7F980A990B73B660000A9140 /* Erbele.sdef in Resources */ = {isa = PBXBuildFile; fileRef = 7F980A950B73B660000A9140 /* Erbele.sdef */; };
@@ -247,8 +245,6 @@
 		7F9809BC0B73B4E1000A9140 /* FRADocumentIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = FRADocumentIcon.icns; path = Resources/Graphics/FRADocumentIcon.icns; sourceTree = "<group>"; };
 		7F9809C50B73B4E1000A9140 /* FRAProjectIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = FRAProjectIcon.icns; path = Resources/Graphics/FRAProjectIcon.icns; sourceTree = "<group>"; };
 		7F9809E70B73B4F4000A9140 /* Syntax Definitions */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Resources/Syntax Definitions"; sourceTree = "<group>"; };
-		7F980A230B73B4F4000A9140 /* Toolbar Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Toolbar Icons"; path = "Resources/Graphics/Toolbar Icons"; sourceTree = "<group>"; };
-		7F980A510B73B5B9000A9140 /* Preferences Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Preferences Icons"; path = "Resources/Graphics/Preferences Icons"; sourceTree = "<group>"; };
 		7F980A8F0B73B641000A9140 /* ODBEditorSuite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ODBEditorSuite.h; path = Other/ODBEditorSuite.h; sourceTree = "<group>"; };
 		7F980A930B73B660000A9140 /* SyntaxDefinitions.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = SyntaxDefinitions.plist; path = Other/SyntaxDefinitions.plist; sourceTree = "<group>"; };
 		7F980A940B73B660000A9140 /* DefaultSnippets.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = DefaultSnippets.plist; path = Other/DefaultSnippets.plist; sourceTree = "<group>"; };
@@ -880,8 +876,6 @@
 		7F9809B40B73B4C8000A9140 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
-				7F980A510B73B5B9000A9140 /* Preferences Icons */,
-				7F980A230B73B4F4000A9140 /* Toolbar Icons */,
 				7F81FED50BA9DDCD00549CDB /* Tab Bar */,
 				7F9809BC0B73B4E1000A9140 /* FRADocumentIcon.icns */,
 				7F9809C50B73B4E1000A9140 /* FRAProjectIcon.icns */,
@@ -1111,8 +1105,6 @@
 				7F9809D20B73B4E1000A9140 /* FRADocumentIcon.icns in Resources */,
 				7F9809DB0B73B4E1000A9140 /* FRAProjectIcon.icns in Resources */,
 				7F980A410B73B4F4000A9140 /* Syntax Definitions in Resources */,
-				7F980A420B73B4F4000A9140 /* Toolbar Icons in Resources */,
-				7F980A610B73B5B9000A9140 /* Preferences Icons in Resources */,
 				7F980A970B73B660000A9140 /* SyntaxDefinitions.plist in Resources */,
 				7F980A980B73B660000A9140 /* DefaultSnippets.plist in Resources */,
 				7F980A990B73B660000A9140 /* Erbele.sdef in Resources */,
@@ -1596,7 +1588,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INSTALL_PATH = "$(LOCAL_APPS_DIR)";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 6.1;
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.erbele.Erbele;
@@ -1645,7 +1637,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INSTALL_PATH = "$(LOCAL_APPS_DIR)";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 6.1;
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.erbele.Erbele;
@@ -1702,7 +1694,7 @@
 					"$(inherited)",
 				);
 				HEADER_SEARCH_PATHS_QUOTED_FOR_PROJECT_1 = "\"$(SRCROOT)/Vendor/ICU/icu/\"";
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-DDEVELOPMENT_STYLE_BUILD";
 				SDKROOT = macosx;
@@ -1753,7 +1745,7 @@
 					"$(inherited)",
 				);
 				HEADER_SEARCH_PATHS_QUOTED_FOR_PROJECT_1 = "\"$(SRCROOT)/Vendor/ICU/icu/\"";
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALID_ARCHS = "$(ARCHS_STANDARD)";

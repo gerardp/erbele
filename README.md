@@ -6,7 +6,7 @@ once, and a large set of tools for editing text.
 
 ## Requirements
 
-* macOS 10.13 (High Sierra) or later
+* macOS 11 (Big Sur) or later
 * Xcode, to build it yourself
 * Runs natively on both Intel and Apple Silicon
 

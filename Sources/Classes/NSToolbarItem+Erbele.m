@@ -12,12 +12,13 @@
 */
 
 #import "NSToolbarItem+Erbele.h"
+#import "NSImage+Erbele.h"
 
 
 @implementation NSToolbarItem (NSToolbarItemErbele)
 
 
-+ (NSToolbarItem *)createToolbarItemWithIdentifier:(NSString *)itemIdentifier name:(NSString *)name image:(NSImage *)image action:(SEL)selector tag:(NSInteger)tag target:(id)target
++ (NSToolbarItem *)createToolbarItemWithIdentifier:(NSString *)itemIdentifier name:(NSString *)name symbolName:(NSString *)symbolName action:(SEL)selector tag:(NSInteger)tag target:(id)target
 {
 	NSToolbarItem *toolbarItem = [[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier];
 	
@@ -27,8 +28,7 @@
 	NSButton *button = [[NSButton alloc] initWithFrame:toolbarItemRect];
 	[button setBezelStyle:NSTexturedRoundedBezelStyle];
 	[button setTitle:@""];
-    [button setImage:image];
-    [button image].template = YES; //improves Dark Mode icon appearance
+    [button setImage:[NSImage toolbarSymbolNamed:symbolName label:name]];
 	[button setTarget:target];
 	[button setAction:selector];
 	[[button cell] setImageScaling:NSImageScaleProportionallyDown];
@@ -52,7 +52,7 @@
 }
 
 
-+ (NSToolbarItem *)createPreferencesToolbarItemWithIdentifier:(NSString *)itemIdentifier name:(NSString *)name image:(NSImage *)image action:(SEL)selector target:(id)target
++ (NSToolbarItem *)createPreferencesToolbarItemWithIdentifier:(NSString *)itemIdentifier name:(NSString *)name symbolName:(NSString *)symbolName action:(SEL)selector target:(id)target
 {
 	NSToolbarItem *toolbarItem = [[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier];
 	
@@ -60,7 +60,7 @@
 	[toolbarItem setPaletteLabel:name];
 	[toolbarItem setToolTip:name];
 	
-	[toolbarItem setImage:image];
+	[toolbarItem setImage:[NSImage preferencesSymbolNamed:symbolName label:name]];
 	[toolbarItem setTarget:target];
 	[toolbarItem setAction:selector];
 	

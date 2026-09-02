@@ -16,9 +16,9 @@
 
 @interface NSToolbarItem (NSToolbarItemErbele)
 
-+ (NSToolbarItem *)createToolbarItemWithIdentifier:(NSString *)itemIdentifier name:(NSString *)name image:(NSImage *)image action:(SEL)selector tag:(NSInteger)tag target:(id)target;
++ (NSToolbarItem *)createToolbarItemWithIdentifier:(NSString *)itemIdentifier name:(NSString *)name symbolName:(NSString *)symbolName action:(SEL)selector tag:(NSInteger)tag target:(id)target;
 
-+ (NSToolbarItem *)createPreferencesToolbarItemWithIdentifier:(NSString *)itemIdentifier name:(NSString *)name image:(NSImage *)image action:(SEL)selector target:(id)target;
++ (NSToolbarItem *)createPreferencesToolbarItemWithIdentifier:(NSString *)itemIdentifier name:(NSString *)name symbolName:(NSString *)symbolName action:(SEL)selector target:(id)target;
 
 + (NSToolbarItem *)createSeachFieldToolbarItemWithIdentifier:(NSString *)itemIdentifier name:(NSString *)name view:(NSView *)view;
 @end

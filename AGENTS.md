@@ -15,7 +15,7 @@ accumulated over twenty years rather than freshly designed.
 * AppKit, Core Data and TextKit 1. ARC is enabled throughout.
 * No external dependencies and no package manager. `PSMTabBar/` and `ICU/` are vendored
   third-party code and live under `Vendor/` — do not edit them.
-* Built with Xcode from `Erbele.xcodeproj`. Deployment target is macOS 10.13; the product
+* Built with Xcode from `Erbele.xcodeproj`. Deployment target is macOS 11.0; the product
   is a universal binary (Intel and Apple Silicon).
 
 ## Repository layout

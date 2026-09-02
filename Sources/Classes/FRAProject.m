@@ -12,7 +12,6 @@
 */
 
 
-#import "NSImage+Erbele.h"
 #import "FRAProject.h"
 #import "FRABasicPerformer.h"
 #import "FRAProjectsController.h"
@@ -83,16 +82,6 @@
 	[documentsTableView registerForDraggedTypes:@[NSFilenamesPboardType, NSStringPboardType, @"FRAMovedDocumentType"]];
 	[documentsTableView setDraggingSourceOperationMask:(NSDragOperationCopy | NSDragOperationMove) forLocal:NO];
 	
-	
-	saveImage = [[NSImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"FRASaveIcon" ofType:@"pdf" inDirectory:@"Toolbar Icons"]];
-	openDocumentImage = [[NSImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"FRAOpenIcon" ofType:@"pdf" inDirectory:@"Toolbar Icons"]];
-	newImage = [[NSImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"FRANewIcon" ofType:@"pdf" inDirectory:@"Toolbar Icons"]];
-	closeImage = [[NSImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"FRACloseIcon" ofType:@"pdf" inDirectory:@"Toolbar Icons"]];
-	advancedFindImage = [[NSImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"FRAAdvancedFindIcon" ofType:@"pdf" inDirectory:@"Toolbar Icons"]];
-	[[advancedFindImage representations][0] setAlpha:YES];
-	previewImage = [[NSImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"FRAPreviewIcon" ofType:@"pdf" inDirectory:@"Toolbar Icons"]];
-	functionImage = [[NSImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"FRAFunctionIcon" ofType:@"pdf" inDirectory:@"Toolbar Icons"]];
-	infoImage = [[NSImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"FRAInfoIcon" ofType:@"pdf" inDirectory:@"Toolbar Icons"]];
 	
 	NSToolbar *toolbar = [[NSToolbar alloc] initWithIdentifier:@"ToolbarIdentifier"];
     [toolbar setShowsBaselineSeparator:YES];

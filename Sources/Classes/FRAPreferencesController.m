@@ -383,30 +383,22 @@ static id sharedInstance = nil;
 {
     if ([itemIdentifier isEqualToString:@"GeneralPreferencesToolbarItem"]) {
         
-		NSImage *generalImage = [NSImage imageNamed:NSImageNamePreferencesGeneral];
-		[generalImage setSize:NSMakeSize(32.0, 32.0)];
-		return [NSToolbarItem createPreferencesToolbarItemWithIdentifier:itemIdentifier name:NSLocalizedString(@"General", @"General preferences toolbar item Label") image:generalImage action:@selector(changeTabInPreferences:) target:self];
+		return [NSToolbarItem createPreferencesToolbarItemWithIdentifier:itemIdentifier name:NSLocalizedString(@"General", @"General preferences toolbar item Label") symbolName:@"gearshape" action:@selector(changeTabInPreferences:) target:self];
         
 		
 	} else if ([itemIdentifier isEqualToString:@"AppearancePreferencesToolbarItem"]) {
 		
-		NSImage *appearanceImage = [[NSImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"FRAAppearanceIcon" ofType:@"pdf" inDirectory:@"Preferences Icons"]];
-		[[appearanceImage representations][0] setAlpha:YES];
-		return [NSToolbarItem createPreferencesToolbarItemWithIdentifier:itemIdentifier name:NSLocalizedString(@"Appearance", @"Appearance preferences toolbar item Label") image:appearanceImage action:@selector(changeTabInPreferences:) target:self];
+		return [NSToolbarItem createPreferencesToolbarItemWithIdentifier:itemIdentifier name:NSLocalizedString(@"Appearance", @"Appearance preferences toolbar item Label") symbolName:@"paintpalette" action:@selector(changeTabInPreferences:) target:self];
         
 		
 	} else if ([itemIdentifier isEqualToString:@"OpenSavePreferencesToolbarItem"]) {
         
-		NSImage *openSaveImage = [[NSImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"FRAOpenSaveIcon" ofType:@"pdf" inDirectory:@"Preferences Icons"]];
-		[[openSaveImage representations][0] setAlpha:YES];
-		return [NSToolbarItem createPreferencesToolbarItemWithIdentifier:itemIdentifier name:NSLocalizedString(@"Open & Save", @"OpenSave preferences toolbar item Label") image:openSaveImage action:@selector(changeTabInPreferences:) target:self];
+		return [NSToolbarItem createPreferencesToolbarItemWithIdentifier:itemIdentifier name:NSLocalizedString(@"Open & Save", @"OpenSave preferences toolbar item Label") symbolName:@"arrow.down.doc" action:@selector(changeTabInPreferences:) target:self];
 		
 		
 	} else if ([itemIdentifier isEqualToString:@"AdvancedPreferencesToolbarItem"]) {
         
-		NSImage *advancedImage = [NSImage imageNamed:NSImageNameAdvanced];
-		[advancedImage setSize:NSMakeSize(32.0, 32.0)];
-		return [NSToolbarItem createPreferencesToolbarItemWithIdentifier:itemIdentifier name:NSLocalizedString(@"Advanced", @"Advanced preferences toolbar item Label") image:advancedImage action:@selector(changeTabInPreferences:) target:self];
+		return [NSToolbarItem createPreferencesToolbarItemWithIdentifier:itemIdentifier name:NSLocalizedString(@"Advanced", @"Advanced preferences toolbar item Label") symbolName:@"gearshape.2" action:@selector(changeTabInPreferences:) target:self];
 		
 	}
 	

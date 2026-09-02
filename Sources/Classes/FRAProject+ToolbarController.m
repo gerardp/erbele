@@ -26,6 +26,7 @@
 #import "FRABasicPerformer.h"
 #import "FRAInterfacePerformer.h"
 #import "FRATextView.h"
+#import "NSImage+Erbele.h"
 
 
 @implementation FRAProject (ToolbarController)
@@ -66,23 +67,23 @@
 {
     if ([itemIdentifier isEqualToString:@"SaveDocumentToolbarItem"]) {
         
-		saveToolbarItem = [NSToolbarItem createToolbarItemWithIdentifier:itemIdentifier name:SAVE_STRING image:saveImage action:@selector(save:) tag:0 target:self];
+		saveToolbarItem = [NSToolbarItem createToolbarItemWithIdentifier:itemIdentifier name:SAVE_STRING symbolName:@"square.and.arrow.down" action:@selector(save:) tag:0 target:self];
 		return saveToolbarItem;
 
 		
 	} else if ([itemIdentifier isEqualToString:@"OpenDocumentToolbarItem"]) {
         
-		return [NSToolbarItem createToolbarItemWithIdentifier:itemIdentifier name:NSLocalizedString(@"Open", @"Open") image:openDocumentImage action:@selector(open:) tag:1 target:self];
+		return [NSToolbarItem createToolbarItemWithIdentifier:itemIdentifier name:NSLocalizedString(@"Open", @"Open") symbolName:@"folder" action:@selector(open:) tag:1 target:self];
 		
 		
 	} else if ([itemIdentifier isEqualToString:@"NewDocumentToolbarItem"]) {
         
-		return [NSToolbarItem createToolbarItemWithIdentifier:itemIdentifier name:NSLocalizedString(@"New", @"New") image:newImage action:@selector(new:) tag:1 target:self];
+		return [NSToolbarItem createToolbarItemWithIdentifier:itemIdentifier name:NSLocalizedString(@"New", @"New") symbolName:@"doc.badge.plus" action:@selector(new:) tag:1 target:self];
 		
 		
 	} else if ([itemIdentifier isEqualToString:@"CloseDocumentToolbarItem"]) {
         
-		closeToolbarItem = [NSToolbarItem createToolbarItemWithIdentifier:itemIdentifier name:NSLocalizedString(@"Close", @"Close") image:closeImage action:@selector(close:) tag:0 target:self];
+		closeToolbarItem = [NSToolbarItem createToolbarItemWithIdentifier:itemIdentifier name:NSLocalizedString(@"Close", @"Close") symbolName:@"xmark.circle" action:@selector(close:) tag:0 target:self];
 		return closeToolbarItem;
 		
 	} else if ([itemIdentifier isEqualToString:@"QuicklyFindNextToolbarItem"]) {
@@ -92,19 +93,19 @@
 		
 	} else if ([itemIdentifier isEqualToString:@"AdvancedFindToolbarItem"]) {
         
-		advancedFindToolbarItem = [NSToolbarItem createToolbarItemWithIdentifier:itemIdentifier name:NSLocalizedString(@"Advanced Find", @"Advanced Find") image:advancedFindImage action:@selector(advancedFind:) tag:0 target:self];
+		advancedFindToolbarItem = [NSToolbarItem createToolbarItemWithIdentifier:itemIdentifier name:NSLocalizedString(@"Advanced Find", @"Advanced Find") symbolName:@"text.magnifyingglass" action:@selector(advancedFind:) tag:0 target:self];
 		return advancedFindToolbarItem;
 		
 		
 	} else if ([itemIdentifier isEqualToString:@"PreviewToolbarItem"]) {
         
-		previewToolbarItem = [NSToolbarItem createToolbarItemWithIdentifier:itemIdentifier name:PREVIEW_STRING image:previewImage action:@selector(preview:) tag:0 target:self];
+		previewToolbarItem = [NSToolbarItem createToolbarItemWithIdentifier:itemIdentifier name:PREVIEW_STRING symbolName:@"eye" action:@selector(preview:) tag:0 target:self];
 		return previewToolbarItem;
 
 	
 	} else if ([itemIdentifier isEqualToString:@"InfoToolbarItem"]) {		
 		
-		infoToolbarItem = [NSToolbarItem createToolbarItemWithIdentifier:itemIdentifier name:NSLocalizedString(@"Info", @"Info") image:infoImage action:@selector(info:) tag:0 target:self];
+		infoToolbarItem = [NSToolbarItem createToolbarItemWithIdentifier:itemIdentifier name:NSLocalizedString(@"Info", @"Info") symbolName:@"info.circle" action:@selector(info:) tag:0 target:self];
 		return infoToolbarItem;
 		
 	
@@ -117,8 +118,7 @@
 		functionButton = [[NSButton alloc] initWithFrame:toolbarItemRect];
 		[functionButton setBezelStyle:NSTexturedRoundedBezelStyle];
 		[functionButton setTitle:@""];
-        [functionButton setImage:functionImage];
-        [functionButton image].template = YES; //improves Dark Mode icon appearance
+        [functionButton setImage:[NSImage toolbarSymbolNamed:@"list.bullet.indent" label:FUNCTION_STRING]];
 		[functionButton setTarget:self];
 		[functionButton setAction:@selector(functionToolbarItemAction:)];
 		[functionButton setImagePosition:NSImageOnly];

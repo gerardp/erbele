@@ -31,7 +31,7 @@
 	<key>endSecondMultiLineComment</key>
 	<string></string>
 	<key>functionDefinition</key>
-	<string>\\((sub)*section|part|chapter|paragraph){[^}]*}</string>
+	<string>\\((sub)*section|part|chapter|paragraph)\{[^}]*\}</string>
 	<key>removeFromFunction</key>
 	<string></string>
 	<key>keywordsCaseSensitive</key>

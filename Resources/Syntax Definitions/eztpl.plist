@@ -31,7 +31,7 @@
 	<key>endSecondMultiLineComment</key>
 	<string>--&gt;</string>
 	<key>functionDefinition</key>
-	<string>^\s*(static)?\s*(private|protected|public)?\s*(static)?\s*function\s+.*\n?\s*{</string>
+	<string>^\s*(static)?\s*(private|protected|public)?\s*(static)?\s*function\s+.*\n?\s*\{</string>
 	<key>removeFromFunction</key>
 	<string>function </string>
 	<key>keywordsCaseSensitive</key>

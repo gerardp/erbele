@@ -23,7 +23,7 @@
 	<key>endFirstMultiLineComment</key>
 	<string>*/</string>
 	<key>functionDefinition</key>
-	<string>^\s*function\s+.*\n?\s*{</string>
+	<string>^\s*function\s+.*\n?\s*\{</string>
 	<key>removeFromFunction</key>
 	<string>function </string>
 	<key>keywordsCaseSensitive</key>

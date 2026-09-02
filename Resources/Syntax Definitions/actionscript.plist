@@ -1931,7 +1931,7 @@
 	<key>firstString</key>
 	<string>"</string>
 	<key>functionDefinition</key>
-	<string>^\s*(private)?(public)?\s*function\s+.*\(.*\)\n?\s*{</string>
+	<string>^\s*(private)?(public)?\s*function\s+.*\(.*\).*\n?\s*\{</string>
 	<key>keywords</key>
 	<array>
 		<string>add</string>

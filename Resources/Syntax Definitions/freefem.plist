@@ -29,7 +29,7 @@
 	<key>endSecondMultiLineComment</key>
 	<string></string>
 	<key>functionDefinition</key>
-	<string>^\s*.*\(.*\)\n?\s*{</string>
+	<string>^\s*.*\(.*\)\n?\s*\{</string>
 	<key>removeFromFunction</key>
 	<string></string>
 	<key>keywordsCaseSensitive</key>

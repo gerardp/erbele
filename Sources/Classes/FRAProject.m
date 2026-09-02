@@ -387,7 +387,7 @@
 				
 			} else {
 				if (document == [self firstDocument] || document == [self secondDocument]) {
-					[currentWindow setRepresentedFilename:[[NSBundle mainBundle] bundlePath]];
+					[currentWindow setRepresentedFilename:@""];
 					if (projectName != nil) {
 						[currentWindow setTitle:[NSString stringWithFormat:@"%@ (%@)", [document valueForKey:@"name"], projectName]];
 					} else {
@@ -395,7 +395,7 @@
 					}
 				}
 				if (singleDocumentWindow != nil) {
-					[singleDocumentWindow setRepresentedFilename:[[NSBundle mainBundle] bundlePath]];
+					[singleDocumentWindow setRepresentedFilename:@""];
 				}
 			}
 			
@@ -412,7 +412,7 @@
 		}
 	} else {
 		[currentWindow setDocumentEdited:NO];
-		[currentWindow setRepresentedFilename:[[NSBundle mainBundle] bundlePath]];
+		[currentWindow setRepresentedFilename:@""];
 		[currentWindow setTitle:@"Erbele"];
 	}
 }

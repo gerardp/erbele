@@ -13,6 +13,12 @@
 
 #import "FRAPrintAccessoryController.h"
 
+// KVO contexts for the observations registered below. They are compared by pointer identity
+// and never messaged: a context that is none of ours belongs to the superclass, and need not
+// be an object at all.
+static void * const FRAPrinterSettingsChangedContext = (void *)&FRAPrinterSettingsChangedContext;
+
+
 @implementation FRAPrintAccessoryController
 
 @synthesize dummyValue;
@@ -47,11 +53,11 @@
 {
 	NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
 
-	[defaultsController addObserver:self forKeyPath:@"values.PrintHeader" options:NSKeyValueObservingOptionNew context:@"PrinterSettingsChanged"];
-	[defaultsController addObserver:self forKeyPath:@"values.PrintSyntaxColours" options:NSKeyValueObservingOptionNew context:@"PrinterSettingsChanged"];
-	[defaultsController addObserver:self forKeyPath:@"values.OnlyPrintSelection" options:NSKeyValueObservingOptionNew context:@"PrinterSettingsChanged"];
-	[defaultsController addObserver:self forKeyPath:@"values.MarginsMin" options:NSKeyValueObservingOptionNew context:@"PrinterSettingsChanged"];
-	[defaultsController addObserver:self forKeyPath:@"values.PrintFont" options:NSKeyValueObservingOptionNew context:@"PrinterSettingsChanged"];
+	[defaultsController addObserver:self forKeyPath:@"values.PrintHeader" options:NSKeyValueObservingOptionNew context:FRAPrinterSettingsChangedContext];
+	[defaultsController addObserver:self forKeyPath:@"values.PrintSyntaxColours" options:NSKeyValueObservingOptionNew context:FRAPrinterSettingsChangedContext];
+	[defaultsController addObserver:self forKeyPath:@"values.OnlyPrintSelection" options:NSKeyValueObservingOptionNew context:FRAPrinterSettingsChangedContext];
+	[defaultsController addObserver:self forKeyPath:@"values.MarginsMin" options:NSKeyValueObservingOptionNew context:FRAPrinterSettingsChangedContext];
+	[defaultsController addObserver:self forKeyPath:@"values.PrintFont" options:NSKeyValueObservingOptionNew context:FRAPrinterSettingsChangedContext];
 }
 
 
@@ -68,7 +74,7 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-	if ([(__bridge NSString *)context isEqualToString:@"PrinterSettingsChanged"]) {
+	if (context == FRAPrinterSettingsChangedContext) {
         // update the margins because they depend on the settings in this view
         [self updateMargins];
         

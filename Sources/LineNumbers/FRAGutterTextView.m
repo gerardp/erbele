@@ -14,6 +14,14 @@
 #import "FRAGutterTextView.h"
 #import "FRABasicPerformer.h"
 
+// KVO contexts for the observations registered below. They are compared by pointer identity
+// and never messaged: a context that is none of ours belongs to our superclass — NSTextView
+// observes the contentInsets of its containing clip view, and the context it uses for that is
+// not an object at all.
+static void * const FRATextFontChangedContext = (void *)&FRATextFontChangedContext;
+static void * const FRAGutterChangedContext = (void *)&FRAGutterChangedContext;
+
+
 @implementation FRAGutterTextView
 
 - (id)initWithFrame:(NSRect)frame
@@ -39,12 +47,12 @@
 		[self darkModeFix];
 
 		NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
-		[defaultsController addObserver:self forKeyPath:@"values.TextFont" options:NSKeyValueObservingOptionNew context:@"TextFontChanged"];
+		[defaultsController addObserver:self forKeyPath:@"values.TextFont" options:NSKeyValueObservingOptionNew context:FRATextFontChangedContext];
         
-        [defaultsController addObserver:self forKeyPath:@"values.GutterBackgroundColourWell" options:NSKeyValueObservingOptionNew context:@"GutterChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values."DARK_MODE@"GutterBackgroundColourWell" options:NSKeyValueObservingOptionNew context:@"GutterChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values.GutterTextColourWell" options:NSKeyValueObservingOptionNew context:@"GutterChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values."DARK_MODE@"GutterTextColourWell" options:NSKeyValueObservingOptionNew context:@"GutterChanged"];
+        [defaultsController addObserver:self forKeyPath:@"values.GutterBackgroundColourWell" options:NSKeyValueObservingOptionNew context:FRAGutterChangedContext];
+        [defaultsController addObserver:self forKeyPath:@"values."DARK_MODE@"GutterBackgroundColourWell" options:NSKeyValueObservingOptionNew context:FRAGutterChangedContext];
+        [defaultsController addObserver:self forKeyPath:@"values.GutterTextColourWell" options:NSKeyValueObservingOptionNew context:FRAGutterChangedContext];
+        [defaultsController addObserver:self forKeyPath:@"values."DARK_MODE@"GutterTextColourWell" options:NSKeyValueObservingOptionNew context:FRAGutterChangedContext];
 		[[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(darkModeChanged:) name:@"AppleInterfaceThemeChangedNotification" object:nil];
 	}
 	return self;
@@ -73,9 +81,9 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-	if ([(__bridge NSString *)context isEqualToString:@"TextFontChanged"]) {
+	if (context == FRATextFontChangedContext) {
 		[self setFont:[NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:@"TextFont"]]];
-    } else if ([(__bridge NSString *)context isEqualToString:@"GutterChanged"]) {
+    } else if (context == FRAGutterChangedContext) {
         [self darkModeFix];
 	} else {
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];

@@ -30,6 +30,13 @@
 #import "ICUMatcher.h"
 #import "NSStringICUAdditions.h"
 
+// KVO contexts for the observations registered below. They are compared by pointer identity
+// and never messaged: a context that is none of ours belongs to the superclass, and need not
+// be an object at all.
+static void * const FRAColoursChangedContext = (void *)&FRAColoursChangedContext;
+static void * const FRAMultiLineChangedContext = (void *)&FRAMultiLineChangedContext;
+
+
 @implementation FRASyntaxColouring
 
 @synthesize reactToChanges, functionDefinition, removeFromFunction, secondLayoutManager, thirdLayoutManager, fourthLayoutManager, undoManager;
@@ -84,37 +91,37 @@
 		
 		NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
         
-		[defaultsController addObserver:self forKeyPath:@"values.CommandsColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.CommentsColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.InstructionsColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.KeywordsColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.AutocompleteColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.VariablesColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.StringsColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.AttributesColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.ColourCommands" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.ColourComments" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.ColourInstructions" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.ColourKeywords" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.ColourAutocomplete" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.ColourVariables" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.ColourStrings" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.ColourAttributes" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.ColourMultiLineStrings" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.OnlyColourTillTheEndOfLine" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.HighlightCurrentLine" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.HighlightLineColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.ColourMultiLineStrings" options:NSKeyValueObservingOptionNew context:@"MultiLineChanged"];
+		[defaultsController addObserver:self forKeyPath:@"values.CommandsColourWell" options:NSKeyValueObservingOptionNew context:FRAColoursChangedContext];
+		[defaultsController addObserver:self forKeyPath:@"values.CommentsColourWell" options:NSKeyValueObservingOptionNew context:FRAColoursChangedContext];
+		[defaultsController addObserver:self forKeyPath:@"values.InstructionsColourWell" options:NSKeyValueObservingOptionNew context:FRAColoursChangedContext];
+		[defaultsController addObserver:self forKeyPath:@"values.KeywordsColourWell" options:NSKeyValueObservingOptionNew context:FRAColoursChangedContext];
+		[defaultsController addObserver:self forKeyPath:@"values.AutocompleteColourWell" options:NSKeyValueObservingOptionNew context:FRAColoursChangedContext];
+		[defaultsController addObserver:self forKeyPath:@"values.VariablesColourWell" options:NSKeyValueObservingOptionNew context:FRAColoursChangedContext];
+		[defaultsController addObserver:self forKeyPath:@"values.StringsColourWell" options:NSKeyValueObservingOptionNew context:FRAColoursChangedContext];
+		[defaultsController addObserver:self forKeyPath:@"values.AttributesColourWell" options:NSKeyValueObservingOptionNew context:FRAColoursChangedContext];
+		[defaultsController addObserver:self forKeyPath:@"values.ColourCommands" options:NSKeyValueObservingOptionNew context:FRAColoursChangedContext];
+		[defaultsController addObserver:self forKeyPath:@"values.ColourComments" options:NSKeyValueObservingOptionNew context:FRAColoursChangedContext];
+		[defaultsController addObserver:self forKeyPath:@"values.ColourInstructions" options:NSKeyValueObservingOptionNew context:FRAColoursChangedContext];
+		[defaultsController addObserver:self forKeyPath:@"values.ColourKeywords" options:NSKeyValueObservingOptionNew context:FRAColoursChangedContext];
+		[defaultsController addObserver:self forKeyPath:@"values.ColourAutocomplete" options:NSKeyValueObservingOptionNew context:FRAColoursChangedContext];
+		[defaultsController addObserver:self forKeyPath:@"values.ColourVariables" options:NSKeyValueObservingOptionNew context:FRAColoursChangedContext];
+		[defaultsController addObserver:self forKeyPath:@"values.ColourStrings" options:NSKeyValueObservingOptionNew context:FRAColoursChangedContext];
+		[defaultsController addObserver:self forKeyPath:@"values.ColourAttributes" options:NSKeyValueObservingOptionNew context:FRAColoursChangedContext];
+		[defaultsController addObserver:self forKeyPath:@"values.ColourMultiLineStrings" options:NSKeyValueObservingOptionNew context:FRAColoursChangedContext];
+		[defaultsController addObserver:self forKeyPath:@"values.OnlyColourTillTheEndOfLine" options:NSKeyValueObservingOptionNew context:FRAColoursChangedContext];
+		[defaultsController addObserver:self forKeyPath:@"values.HighlightCurrentLine" options:NSKeyValueObservingOptionNew context:FRAColoursChangedContext];
+		[defaultsController addObserver:self forKeyPath:@"values.HighlightLineColourWell" options:NSKeyValueObservingOptionNew context:FRAColoursChangedContext];
+		[defaultsController addObserver:self forKeyPath:@"values.ColourMultiLineStrings" options:NSKeyValueObservingOptionNew context:FRAMultiLineChangedContext];
         
-        [defaultsController addObserver:self forKeyPath:@"values."DARK_MODE@"CommandsColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values."DARK_MODE@"CommentsColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values."DARK_MODE@"InstructionsColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values."DARK_MODE@"KeywordsColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values."DARK_MODE@"AutocompleteColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values."DARK_MODE@"VariablesColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values."DARK_MODE@"StringsColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values."DARK_MODE@"AttributesColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values."DARK_MODE@"HighlightLineColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
+        [defaultsController addObserver:self forKeyPath:@"values."DARK_MODE@"CommandsColourWell" options:NSKeyValueObservingOptionNew context:FRAColoursChangedContext];
+        [defaultsController addObserver:self forKeyPath:@"values."DARK_MODE@"CommentsColourWell" options:NSKeyValueObservingOptionNew context:FRAColoursChangedContext];
+        [defaultsController addObserver:self forKeyPath:@"values."DARK_MODE@"InstructionsColourWell" options:NSKeyValueObservingOptionNew context:FRAColoursChangedContext];
+        [defaultsController addObserver:self forKeyPath:@"values."DARK_MODE@"KeywordsColourWell" options:NSKeyValueObservingOptionNew context:FRAColoursChangedContext];
+        [defaultsController addObserver:self forKeyPath:@"values."DARK_MODE@"AutocompleteColourWell" options:NSKeyValueObservingOptionNew context:FRAColoursChangedContext];
+        [defaultsController addObserver:self forKeyPath:@"values."DARK_MODE@"VariablesColourWell" options:NSKeyValueObservingOptionNew context:FRAColoursChangedContext];
+        [defaultsController addObserver:self forKeyPath:@"values."DARK_MODE@"StringsColourWell" options:NSKeyValueObservingOptionNew context:FRAColoursChangedContext];
+        [defaultsController addObserver:self forKeyPath:@"values."DARK_MODE@"AttributesColourWell" options:NSKeyValueObservingOptionNew context:FRAColoursChangedContext];
+        [defaultsController addObserver:self forKeyPath:@"values."DARK_MODE@"HighlightLineColourWell" options:NSKeyValueObservingOptionNew context:FRAColoursChangedContext];
 	}
     return self;
 }
@@ -158,7 +165,7 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-	if ([(__bridge NSString *)context isEqualToString:@"ColoursChanged"]) {
+	if (context == FRAColoursChangedContext) {
 		[self setColours];
 		[self pageRecolour];
 		if ([[FRADefaults valueForKey:@"HighlightCurrentLine"] boolValue] == YES) {
@@ -169,7 +176,7 @@
 		} else {
 			[self highlightLineRange:NSMakeRange(0, 0)];
 		}
-	} else if ([(__bridge NSString *)context isEqualToString:@"MultiLineChanged"]) {
+	} else if (context == FRAMultiLineChangedContext) {
 		[self prepareRegularExpressions];
 		[self pageRecolour];
 	} else {

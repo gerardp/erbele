@@ -22,6 +22,18 @@
 #import "Erbele-Swift.h"
 
 
+// Contexts for the preference observations registered below. They are compared by pointer
+// identity and never messaged: a context that is none of these belongs to our superclass —
+// NSTextView observes the contentInsets of its containing clip view, and the context it uses
+// for that is not an object at all.
+static void * const FRATextFontChangedContext = (void *)&FRATextFontChangedContext;
+static void * const FRATextColourChangedContext = (void *)&FRATextColourChangedContext;
+static void * const FRABackgroundColourChangedContext = (void *)&FRABackgroundColourChangedContext;
+static void * const FRASmartInsertDeleteChangedContext = (void *)&FRASmartInsertDeleteChangedContext;
+static void * const FRATabWidthChangedContext = (void *)&FRATabWidthChangedContext;
+static void * const FRAPageGuideChangedContext = (void *)&FRAPageGuideChangedContext;
+
+
 @implementation FRATextView
 
 @synthesize colouredIBeamCursor;
@@ -74,16 +86,15 @@
 	[self addTrackingArea:trackingArea];
 	
 	NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
-	[defaultsController addObserver:self forKeyPath:@"values.TextFont" options:NSKeyValueObservingOptionNew context:@"TextFontChanged"];
-	[defaultsController addObserver:self forKeyPath:@"values.TextColourWell" options:NSKeyValueObservingOptionNew context:@"TextColourChanged"];
-    [defaultsController addObserver:self forKeyPath:@"values."DARK_MODE@"TextColourWell" options:NSKeyValueObservingOptionNew context:@"TextColourChanged"];
-	[defaultsController addObserver:self forKeyPath:@"values.BackgroundColourWell" options:NSKeyValueObservingOptionNew context:@"BackgroundColourChanged"];
-    [defaultsController addObserver:self forKeyPath:@"values."DARK_MODE@"BackgroundColourWell" options:NSKeyValueObservingOptionNew context:@"BackgroundColourChanged"];
-	[defaultsController addObserver:self forKeyPath:@"values.SmartInsertDelete" options:NSKeyValueObservingOptionNew context:@"SmartInsertDeleteChanged"];
-	[defaultsController addObserver:self forKeyPath:@"values.TabWidth" options:NSKeyValueObservingOptionNew context:@"TabWidthChanged"];
-	[defaultsController addObserver:self forKeyPath:@"values.ShowPageGuide" options:NSKeyValueObservingOptionNew context:@"PageGuideChanged"];
-	[defaultsController addObserver:self forKeyPath:@"values.ShowPageGuideAtColumn" options:NSKeyValueObservingOptionNew context:@"PageGuideChanged"];
-	[defaultsController addObserver:self forKeyPath:@"values.SmartInsertDelete" options:NSKeyValueObservingOptionNew context:@"SmartInsertDeleteChanged"];
+	[defaultsController addObserver:self forKeyPath:@"values.TextFont" options:NSKeyValueObservingOptionNew context:FRATextFontChangedContext];
+	[defaultsController addObserver:self forKeyPath:@"values.TextColourWell" options:NSKeyValueObservingOptionNew context:FRATextColourChangedContext];
+    [defaultsController addObserver:self forKeyPath:@"values."DARK_MODE@"TextColourWell" options:NSKeyValueObservingOptionNew context:FRATextColourChangedContext];
+	[defaultsController addObserver:self forKeyPath:@"values.BackgroundColourWell" options:NSKeyValueObservingOptionNew context:FRABackgroundColourChangedContext];
+    [defaultsController addObserver:self forKeyPath:@"values."DARK_MODE@"BackgroundColourWell" options:NSKeyValueObservingOptionNew context:FRABackgroundColourChangedContext];
+	[defaultsController addObserver:self forKeyPath:@"values.TabWidth" options:NSKeyValueObservingOptionNew context:FRATabWidthChangedContext];
+	[defaultsController addObserver:self forKeyPath:@"values.ShowPageGuide" options:NSKeyValueObservingOptionNew context:FRAPageGuideChangedContext];
+	[defaultsController addObserver:self forKeyPath:@"values.ShowPageGuideAtColumn" options:NSKeyValueObservingOptionNew context:FRAPageGuideChangedContext];
+	[defaultsController addObserver:self forKeyPath:@"values.SmartInsertDelete" options:NSKeyValueObservingOptionNew context:FRASmartInsertDeleteChangedContext];
 	[[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(darkModeChanged:) name:@"AppleInterfaceThemeChangedNotification" object:nil];
     
 	lineHeight = [[[self textContainer] layoutManager] defaultLineHeightForFont:[NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:@"TextFont"]]];
@@ -110,26 +121,24 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-	if ([(__bridge NSString *)context isEqualToString:@"TextFontChanged"]) {
+	if (context == FRATextFontChangedContext) {
 		[self setFont:[NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:@"TextFont"]]];
 		lineHeight = [[[self textContainer] layoutManager] defaultLineHeightForFont:[NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:@"TextFont"]]];
 		[[FRACurrentDocument valueForKey:@"lineNumbers"] updateLineNumbersForClipView:[[self enclosingScrollView] contentView] checkWidth:NO recolour:YES];
 		[self setPageGuideValues];
-	} else if ([(__bridge NSString *)context isEqualToString:@"TextColourChanged"]) {
+	} else if (context == FRATextColourChangedContext) {
 		[self setTextColor:[NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:[ FRABasic lightDarkPreference: @"TextColourWell"] ]]];
 		[self setInsertionPointColor:[NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:[ FRABasic lightDarkPreference: @"TextColourWell"] ]]];
 		[self setPageGuideValues];
 		[self updateIBeamCursor];
-	} else if ([(__bridge NSString *)context isEqualToString:@"BackgroundColourChanged"]) {
+	} else if (context == FRABackgroundColourChangedContext) {
 		[self setBackgroundColor:[NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:[ FRABasic lightDarkPreference: @"BackgroundColourWell"]]]];
-	} else if ([(__bridge NSString *)context isEqualToString:@"SmartInsertDeleteChanged"]) {
+	} else if (context == FRASmartInsertDeleteChangedContext) {
 		[self setSmartInsertDeleteEnabled:[[FRADefaults valueForKey:@"SmartInsertDelete"] boolValue]];
-	} else if ([(__bridge NSString *)context isEqualToString:@"TabWidthChanged"]) {
+	} else if (context == FRATabWidthChangedContext) {
 		[self setTabWidth];
-	} else if ([(__bridge NSString *)context isEqualToString:@"PageGuideChanged"]) {
+	} else if (context == FRAPageGuideChangedContext) {
 		[self setPageGuideValues];
-	} else if ([(__bridge NSString *)context isEqualToString:@"SmartInsertDeleteChanged"]) {
-		[self setSmartInsertDeleteEnabled:[[FRADefaults valueForKey:@"SmartInsertDelete"] boolValue]];
 	} else {
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 	}

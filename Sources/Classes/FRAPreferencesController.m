@@ -27,6 +27,17 @@
 #import "FRALineNumbers.h"
 #import "NSToolbarItem+Erbele.h"
 
+// KVO contexts for the observations registered below. They are compared by pointer identity
+// and never messaged: a context that is none of ours belongs to the superclass, and need not
+// be an object at all.
+static void * const FRAStatusBarChangedContext = (void *)&FRAStatusBarChangedContext;
+static void * const FRAStatusBarLastSavedFormatChangedContext = (void *)&FRAStatusBarLastSavedFormatChangedContext;
+static void * const FRASizeOfDocumentsListTextPopUpChangedContext = (void *)&FRASizeOfDocumentsListTextPopUpChangedContext;
+static void * const FRAShowFullPathInWindowTitleChangedContext = (void *)&FRAShowFullPathInWindowTitleChangedContext;
+static void * const FRACheckIfDocumentHasBeenUpdatedChangedContext = (void *)&FRACheckIfDocumentHasBeenUpdatedChangedContext;
+static void * const FRADocumentsListPathSettingsChangedContext = (void *)&FRADocumentsListPathSettingsChangedContext;
+
+
 @implementation FRAPreferencesController
 
 @synthesize encodingsArrayController, syntaxDefinitionsArrayController, encodingsPopUp, preferencesWindow;
@@ -217,17 +228,17 @@ static id sharedInstance = nil;
 	NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
 	[defaultsController setInitialValues: dictionary];
 	
-	[defaultsController addObserver:self forKeyPath:@"values.StatusBarShowEncoding" options:NSKeyValueObservingOptionNew context:@"StatusBarChanged"];
-	[defaultsController addObserver:self forKeyPath:@"values.StatusBarShowLength" options:NSKeyValueObservingOptionNew context:@"StatusBarChanged"];
-	[defaultsController addObserver:self forKeyPath:@"values.StatusBarShowSelection" options:NSKeyValueObservingOptionNew context:@"StatusBarChanged"];
-	[defaultsController addObserver:self forKeyPath:@"values.StatusBarShowPosition" options:NSKeyValueObservingOptionNew context:@"StatusBarChanged"];
-	[defaultsController addObserver:self forKeyPath:@"values.StatusBarShowSyntax" options:NSKeyValueObservingOptionNew context:@"StatusBarChanged"];
-	[defaultsController addObserver:self forKeyPath:@"values.StatusBarShowWhenLastSaved" options:NSKeyValueObservingOptionNew context:@"StatusBarChanged"];
-	[defaultsController addObserver:self forKeyPath:@"values.StatusBarLastSavedFormatPopUp" options:NSKeyValueObservingOptionNew context:@"StatusBarLastSavedFormatChanged"];
-	[defaultsController addObserver:self forKeyPath:@"values.SizeOfDocumentsListTextPopUp" options:NSKeyValueObservingOptionNew context:@"SizeOfDocumentsListTextPopUpChanged"];
-	[defaultsController addObserver:self forKeyPath:@"values.ShowFullPathInWindowTitle" options:NSKeyValueObservingOptionNew context:@"ShowFullPathInWindowTitleChanged"];
-	[defaultsController addObserver:self forKeyPath:@"values.CheckIfDocumentHasBeenUpdated" options:NSKeyValueObservingOptionNew context:@"CheckIfDocumentHasBeenUpdatedChanged"];
-	[defaultsController addObserver:self forKeyPath:@"values.ShowFullPathInDocumentsList" options:NSKeyValueObservingOptionNew context:@"DocumentsListPathSettingsChanged"];
+	[defaultsController addObserver:self forKeyPath:@"values.StatusBarShowEncoding" options:NSKeyValueObservingOptionNew context:FRAStatusBarChangedContext];
+	[defaultsController addObserver:self forKeyPath:@"values.StatusBarShowLength" options:NSKeyValueObservingOptionNew context:FRAStatusBarChangedContext];
+	[defaultsController addObserver:self forKeyPath:@"values.StatusBarShowSelection" options:NSKeyValueObservingOptionNew context:FRAStatusBarChangedContext];
+	[defaultsController addObserver:self forKeyPath:@"values.StatusBarShowPosition" options:NSKeyValueObservingOptionNew context:FRAStatusBarChangedContext];
+	[defaultsController addObserver:self forKeyPath:@"values.StatusBarShowSyntax" options:NSKeyValueObservingOptionNew context:FRAStatusBarChangedContext];
+	[defaultsController addObserver:self forKeyPath:@"values.StatusBarShowWhenLastSaved" options:NSKeyValueObservingOptionNew context:FRAStatusBarChangedContext];
+	[defaultsController addObserver:self forKeyPath:@"values.StatusBarLastSavedFormatPopUp" options:NSKeyValueObservingOptionNew context:FRAStatusBarLastSavedFormatChangedContext];
+	[defaultsController addObserver:self forKeyPath:@"values.SizeOfDocumentsListTextPopUp" options:NSKeyValueObservingOptionNew context:FRASizeOfDocumentsListTextPopUpChangedContext];
+	[defaultsController addObserver:self forKeyPath:@"values.ShowFullPathInWindowTitle" options:NSKeyValueObservingOptionNew context:FRAShowFullPathInWindowTitleChangedContext];
+	[defaultsController addObserver:self forKeyPath:@"values.CheckIfDocumentHasBeenUpdated" options:NSKeyValueObservingOptionNew context:FRACheckIfDocumentHasBeenUpdatedChangedContext];
+	[defaultsController addObserver:self forKeyPath:@"values.ShowFullPathInDocumentsList" options:NSKeyValueObservingOptionNew context:FRADocumentsListPathSettingsChangedContext];
     
 }
 
@@ -251,10 +262,10 @@ static id sharedInstance = nil;
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-	if ([(__bridge NSString *)context isEqualToString:@"StatusBarChanged"]) {
+	if (context == FRAStatusBarChangedContext) {
 		[FRAInterface updateStatusBar];
 		
-	} else if ([(__bridge NSString *)context isEqualToString:@"StatusBarLastSavedFormatChanged"]) {
+	} else if (context == FRAStatusBarLastSavedFormatChangedContext) {
 		NSArray *array = [FRABasic fetchAll:@"Document"];
 		for (id item in array) {
 			if ([[item valueForKey:@"isNewDocument"] boolValue] == NO) {
@@ -263,7 +274,7 @@ static id sharedInstance = nil;
 		}
 		[FRAInterface updateStatusBar];
 		
-	} else if ([(__bridge NSString *)context isEqualToString:@"ShowFullPathInWindowTitleChanged"]) {
+	} else if (context == FRAShowFullPathInWindowTitleChangedContext) {
 		NSArray *projectsArray = [[FRAProjectsController sharedDocumentController] documents];
 		for (id project in projectsArray) {
 			NSArray *documentsArray = [FRABasic fetchAll:@"Document"];
@@ -272,7 +283,7 @@ static id sharedInstance = nil;
 			}
 		}
 		
-	} else if ([(__bridge NSString *)context isEqualToString:@"SizeOfDocumentsListTextPopUpChanged"]) {
+	} else if (context == FRASizeOfDocumentsListTextPopUpChangedContext) {
 		NSArray *array = [[FRAProjectsController sharedDocumentController] documents];
 		for (id item in array) {
 			[item reloadData];
@@ -293,10 +304,10 @@ static id sharedInstance = nil;
 			[[[FRAAdvancedFindController sharedInstance] findResultsOutlineView] reloadData];
 		}
 		
-	} else if ([(__bridge NSString *)context isEqualToString:@"CheckIfDocumentHasBeenUpdatedChanged"]) {
+	} else if (context == FRACheckIfDocumentHasBeenUpdatedChangedContext) {
 		[FRAVarious updateCheckIfAnotherApplicationHasChangedDocumentsTimer];
 		
-	} else if ([(__bridge NSString *)context isEqualToString:@"DocumentsListPathSettingsChanged"]) {
+	} else if (context == FRADocumentsListPathSettingsChangedContext) {
 		NSArray *array = [[FRAProjectsController sharedDocumentController] documents];
 		for (id item in array) {
 			[item reloadData];

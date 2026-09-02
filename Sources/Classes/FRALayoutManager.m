@@ -15,6 +15,12 @@
 #import "FRABasicPerformer.h"
 #import "Erbele-Swift.h"
 
+// KVO contexts for the observations registered below. They are compared by pointer identity
+// and never messaged: a context that is none of ours belongs to the superclass, and need not
+// be an object at all.
+static void * const FRAFontOrColourValueChangedContext = (void *)&FRAFontOrColourValueChangedContext;
+
+
 @implementation FRALayoutManager
 
 @synthesize showsInvisibleChars;
@@ -36,9 +42,9 @@
 		self.showsInvisibleChars = [[FRADefaults valueForKey:@"ShowInvisibleCharacters"] boolValue];
 		
 		NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
-		[defaultsController addObserver:self forKeyPath:@"values.TextFont" options:NSKeyValueObservingOptionNew context:@"FontOrColourValueChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.InvisibleCharactersColourWell" options:NSKeyValueObservingOptionNew context:@"FontOrColourValueChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values."DARK_MODE@"InvisibleCharactersColourWell" options:NSKeyValueObservingOptionNew context:@"FontOrColourValueChanged"];
+		[defaultsController addObserver:self forKeyPath:@"values.TextFont" options:NSKeyValueObservingOptionNew context:FRAFontOrColourValueChangedContext];
+		[defaultsController addObserver:self forKeyPath:@"values.InvisibleCharactersColourWell" options:NSKeyValueObservingOptionNew context:FRAFontOrColourValueChangedContext];
+        [defaultsController addObserver:self forKeyPath:@"values."DARK_MODE@"InvisibleCharactersColourWell" options:NSKeyValueObservingOptionNew context:FRAFontOrColourValueChangedContext];
 	}
 	return self;
 }
@@ -55,7 +61,7 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-	if ([(__bridge NSString *)context isEqualToString:@"FontOrColourValueChanged"]) {
+	if (context == FRAFontOrColourValueChangedContext) {
 		attributes = @{NSFontAttributeName: [NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:@"TextFont"]], NSForegroundColorAttributeName: [NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:[FRABasic lightDarkPreference: @"InvisibleCharactersColourWell"] ]]};
 		[[self firstTextView] setNeedsDisplay:YES];
 	} else {

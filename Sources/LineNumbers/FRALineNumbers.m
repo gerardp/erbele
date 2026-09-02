@@ -17,6 +17,12 @@
 #import "FRAProject.h"
 #import "FRATextView.h"
 
+// KVO contexts for the observations registered below. They are compared by pointer identity
+// and never messaged: a context that is none of ours belongs to the superclass, and need not
+// be an object at all.
+static void * const FRATextFontChangedContext = (void *)&FRATextFontChangedContext;
+
+
 @implementation FRALineNumbers
 
 - (id)init
@@ -36,7 +42,7 @@
 		
 		attributes = @{NSFontAttributeName: [NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:@"TextFont"]]};
 		NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
-		[defaultsController addObserver:self forKeyPath:@"values.TextFont" options:NSKeyValueObservingOptionNew context:@"TextFontChanged"];
+		[defaultsController addObserver:self forKeyPath:@"values.TextFont" options:NSKeyValueObservingOptionNew context:FRATextFontChangedContext];
 	}
 	
     return self;
@@ -52,7 +58,7 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-	if ([(__bridge NSString *)context isEqualToString:@"TextFontChanged"]) {
+	if (context == FRATextFontChangedContext) {
 		attributes = @{NSFontAttributeName: [NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:@"TextFont"]]};
         [self updateLineNumbersCheckWidth:YES recolour:YES];
 	} else {

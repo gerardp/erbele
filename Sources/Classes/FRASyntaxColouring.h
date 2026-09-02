@@ -15,8 +15,6 @@
 
 @class FRATextView;
 @class FRALayoutManager;
-@class ICUPattern;
-@class ICUMatcher;
 
 @interface FRASyntaxColouring : NSObject <NSTextStorageDelegate> {
 	
@@ -86,11 +84,8 @@
 	
 	NSCharacterSet *attributesCharacterSet;
 	
-	ICUPattern *firstStringPattern;
-	ICUPattern *secondStringPattern;
-	
-	ICUMatcher *firstStringMatcher;
-	ICUMatcher *secondStringMatcher;
+	NSRegularExpression *firstStringPattern;
+	NSRegularExpression *secondStringPattern;
 	
 	NSRange foundRange;
 	

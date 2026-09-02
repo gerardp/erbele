@@ -14,9 +14,6 @@
 
 #import "FRAAdvancedFindController.h"
 
-#import "ICUPattern.h"
-#import "ICUMatcher.h"
-#import "NSStringICUAdditions.h"
 #import "FRAExtraInterfaceController.h"
 #import "FRAProjectsController.h"
 #import "FRABasicPerformer.h"
@@ -49,6 +46,22 @@ static id sharedInstance = nil;
         sharedInstance = [super init];
     }
     return sharedInstance;
+}
+
+
+- (NSRegularExpression *)regularExpressionForSearchString:(NSString *)searchString
+{
+	NSRegularExpressionOptions options = NSRegularExpressionAnchorsMatchLines;
+	if ([[FRADefaults valueForKey:@"IgnoreCaseAdvancedFind"] boolValue] == YES) {
+		options |= NSRegularExpressionCaseInsensitive;
+	}
+	
+	NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:searchString options:options error:NULL];
+	if (regularExpression == nil) {
+		[self alertThatThisIsNotAValidRegularExpression:searchString];
+	}
+	
+	return regularExpression;
 }
 
 
@@ -123,32 +136,22 @@ static id sharedInstance = nil;
 		resultsInThisDocument = 0;
 		
 		if ([[FRADefaults valueForKey:@"UseRegularExpressionsAdvancedFind"] boolValue] == YES) {
-			ICUPattern *pattern;
-			@try {
-				if ([[FRADefaults valueForKey:@"IgnoreCaseAdvancedFind"] boolValue] == YES) {
-					pattern = [[ICUPattern alloc] initWithString:searchString flags:(ICUCaseInsensitiveMatching | ICUMultiline)];
-				} else {
-					pattern = [[ICUPattern alloc] initWithString:searchString flags:ICUMultiline];
-				}
-			}
-			@catch (NSException *exception) {
-				[self alertThatThisIsNotAValidRegularExpression:searchString];
+			NSRegularExpression *regularExpression = [self regularExpressionForSearchString:searchString];
+			if (regularExpression == nil) {
 				return;
 			}
-			@finally {
-			}
 			
-			if ([completeString length] > 0) { // Otherwise ICU throws an exception
-				ICUMatcher *matcher;
+			if ([completeString length] > 0) { // An empty document would only ever yield an empty match
+				NSString *stringToSearch;
 				if ([[FRADefaults valueForKey:@"OnlyInSelectionAdvancedFind"] boolValue] == NO || searchRange.length == 0) {
-					matcher = [[ICUMatcher alloc] initWithPattern:pattern overString:completeString];
+					stringToSearch = completeString;
 				} else {
-					matcher = [[ICUMatcher alloc] initWithPattern:pattern overString:[completeString substringWithRange:searchRange]];
+					stringToSearch = [completeString substringWithRange:searchRange];
 				}
 				
 				NSInteger indexTemp;
-				while ([matcher findNext]) {
-					NSInteger foundLocation = [matcher rangeOfMatch].location + startLocation;
+				for (NSTextCheckingResult *match in [regularExpression matchesInString:stringToSearch options:0 range:NSMakeRange(0, [stringToSearch length])]) {
+					NSInteger foundLocation = [match range].location + startLocation;
 					for (index = 0, lineNumber = 0; index <= foundLocation; lineNumber++) {
 						indexTemp = index;
 						index = NSMaxRange([completeString lineRangeForRange:NSMakeRange(index, 0)]);
@@ -158,7 +161,7 @@ static id sharedInstance = nil;
 					}
 					
 					@autoreleasepool {
-						NSRange rangeMatch = NSMakeRange([matcher rangeOfMatch].location + searchRange.location, [matcher rangeOfMatch].length);
+						NSRange rangeMatch = NSMakeRange([match range].location + searchRange.location, [match range].length);
 						[self.findResultsTreeController insertObject:[self preparedResultDictionaryFromString:completeString searchStringLength:searchStringLength range:rangeMatch lineNumber:lineNumber document:document] atArrangedObjectIndexPath:[folderIndexPath indexPathByAddingIndex:resultsInThisDocument]];
 					}
 					
@@ -294,32 +297,19 @@ static id sharedInstance = nil;
 		resultsInThisDocument = 0;
 		
 		if ([[FRADefaults valueForKey:@"UseRegularExpressionsAdvancedFind"] boolValue] == YES) {
-			ICUPattern *pattern;
-			@try { 
-				if ([[FRADefaults valueForKey:@"IgnoreCaseAdvancedFind"] boolValue] == YES) {
-					pattern = [[ICUPattern alloc] initWithString:searchString flags:(ICUCaseInsensitiveMatching | ICUMultiline)];
-				} else {
-					pattern = [[ICUPattern alloc] initWithString:searchString flags:ICUMultiline];
-				}
-			}
-			@catch (NSException *exception) {
-				[self alertThatThisIsNotAValidRegularExpression:searchString];
+			NSRegularExpression *regularExpression = [self regularExpressionForSearchString:searchString];
+			if (regularExpression == nil) {
 				return;
 			}
-			@finally {
-			}
 			
-			ICUMatcher *matcher;
+			NSString *stringToSearch;
 			if ([[FRADefaults valueForKey:@"OnlyInSelectionAdvancedFind"] boolValue] == NO || searchRange.length == 0) {
-				matcher = [[ICUMatcher alloc] initWithPattern:pattern overString:completeString];
+				stringToSearch = completeString;
 			} else {
-				matcher = [[ICUMatcher alloc] initWithPattern:pattern overString:[completeString substringWithRange:searchRange]];
+				stringToSearch = [completeString substringWithRange:searchRange];
 			}
 			
-
-			while ([matcher findNext]) {
-				resultsInThisDocument++;
-			}
+			resultsInThisDocument = [regularExpression numberOfMatchesInString:stringToSearch options:0 range:NSMakeRange(0, [stringToSearch length])];
 	
 			
 		} else {
@@ -426,25 +416,15 @@ static id sharedInstance = nil;
 		}
 		
 		if ([[FRADefaults valueForKey:@"UseRegularExpressionsAdvancedFind"] boolValue] == YES) {		
-			ICUPattern *pattern;
-			@try {
-				if ([[FRADefaults valueForKey:@"IgnoreCaseAdvancedFind"] boolValue] == YES) {
-					pattern = [[ICUPattern alloc] initWithString:searchString flags:(ICUCaseInsensitiveMatching | ICUMultiline)];
-				} else {
-					pattern = [[ICUPattern alloc] initWithString:searchString flags:ICUMultiline];
-				}
-			}
-			@catch (NSException *exception) {
-				[self alertThatThisIsNotAValidRegularExpression:searchString];
+			NSRegularExpression *regularExpression = [self regularExpressionForSearchString:searchString];
+			if (regularExpression == nil) {
 				return;
 			}
-			@finally {
-			}
-			ICUMatcher *matcher;
+			NSString *stringToSearch;
 			if ([[FRADefaults valueForKey:@"OnlyInSelectionAdvancedFind"] boolValue] == NO) {
-				matcher = [[ICUMatcher alloc] initWithPattern:pattern overString:completeString];
+				stringToSearch = completeString;
 			} else {
-				matcher = [[ICUMatcher alloc] initWithPattern:pattern overString:[completeString substringWithRange:searchRange]];
+				stringToSearch = [completeString substringWithRange:searchRange];
 			}
 
 			NSMutableString *regularExpressionReplaceString = [NSMutableString stringWithString:replaceString];
@@ -452,10 +432,11 @@ static id sharedInstance = nil;
 			[regularExpressionReplaceString replaceOccurrencesOfString:@"\\r" withString:[NSString stringWithFormat:@"%C", 0x000D] options:NSLiteralSearch range:NSMakeRange(0, [regularExpressionReplaceString length])];
 			[regularExpressionReplaceString replaceOccurrencesOfString:@"\\t" withString:[NSString stringWithFormat:@"%C", 0x0009] options:NSLiteralSearch range:NSMakeRange(0, [regularExpressionReplaceString length])];
 			
+			NSString *replaced = [regularExpression stringByReplacingMatchesInString:stringToSearch options:0 range:NSMakeRange(0, [stringToSearch length]) withTemplate:regularExpressionReplaceString];
 			if ([[FRADefaults valueForKey:@"OnlyInSelectionAdvancedFind"] boolValue] == NO) {
-				[completeString setString:[matcher replaceAllWithString:regularExpressionReplaceString]];
+				[completeString setString:replaced];
 			} else {
-				[completeString replaceCharactersInRange:searchRange withString:[matcher replaceAllWithString:regularExpressionReplaceString]];
+				[completeString replaceCharactersInRange:searchRange withString:replaced];
 			}
 			
 

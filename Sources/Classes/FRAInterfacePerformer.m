@@ -25,9 +25,6 @@
 #import "FRAProject.h"
 #import "FRASyntaxColouring.h"
 
-#import "ICUPattern.h"
-#import "ICUMatcher.h"
-#import "NSStringICUAdditions.h"
 
 #import "Erbele-Swift.h"
 
@@ -514,15 +511,17 @@ static id sharedInstance = nil;
 		return @[];
 	}
 	
-	ICUPattern *pattern = [[ICUPattern alloc] initWithString:functionDefinition flags:(ICUCaseInsensitiveMatching | ICUMultiline)];
-	ICUMatcher *matcher = [[ICUMatcher alloc] initWithPattern:pattern overString:text];
+	NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:functionDefinition options:(NSRegularExpressionCaseInsensitive | NSRegularExpressionAnchorsMatchLines) error:NULL];
+	if (regularExpression == nil) { // The syntax definition does not carry a valid pattern
+		return @[];
+	}
 
 	NSInteger index = 0;
 	NSInteger lineNumber = 0;
 	NSMutableArray *returnArray = [NSMutableArray array];
 	NSArray *keys = @[@"lineNumber", @"name"];
-	while ([matcher findNext]) {
-		NSRange matchRange = [matcher rangeOfMatch];
+	for (NSTextCheckingResult *match in [regularExpression matchesInString:text options:0 range:NSMakeRange(0, [text length])]) {
+		NSRange matchRange = [match range];
 		while (index <= matchRange.location + 1) {
 			index = NSMaxRange([text lineRangeForRange:NSMakeRange(index, 0)]);
 			lineNumber++;

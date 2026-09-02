@@ -26,9 +26,6 @@
 #import "FRAProject.h"
 #import "FRAProject+DocumentViewsController.h"
 
-#import "ICUPattern.h"
-#import "ICUMatcher.h"
-#import "NSStringICUAdditions.h"
 
 // KVO contexts for the observations registered below. They are compared by pointer identity
 // and never messaged: a context that is none of ours belongs to the superclass, and need not
@@ -469,16 +466,24 @@ static void * const FRAMultiLineChangedContext = (void *)&FRAMultiLineChangedCon
 
 - (void)prepareRegularExpressions
 {
+	NSString *firstStringPatternString;
+	NSString *secondStringPatternString;
+	
 	if ([[FRADefaults valueForKey:@"ColourMultiLineStrings"] boolValue] == NO) {
-		firstStringPattern = [[ICUPattern alloc] initWithString:[NSString stringWithFormat:@"\\W%@[^%@\\\\\\r\\n]*+(?:\\\\(?:.|$)[^%@\\\\\\r\\n]*+)*+%@", firstString, firstString, firstString, firstString]];
+		firstStringPatternString = [NSString stringWithFormat:@"\\W%@[^%@\\\\\\r\\n]*+(?:\\\\(?:.|$)[^%@\\\\\\r\\n]*+)*+%@", firstString, firstString, firstString, firstString];
 		
-		secondStringPattern = [[ICUPattern alloc] initWithString:[NSString stringWithFormat:@"\\W%@[^%@\\\\\\r\\n]*+(?:\\\\(?:.|$)[^%@\\\\]*+)*+%@", secondString, secondString, secondString, secondString]];
+		secondStringPatternString = [NSString stringWithFormat:@"\\W%@[^%@\\\\\\r\\n]*+(?:\\\\(?:.|$)[^%@\\\\]*+)*+%@", secondString, secondString, secondString, secondString];
         
 	} else {
-		firstStringPattern = [[ICUPattern alloc] initWithString:[NSString stringWithFormat:@"\\W%@[^%@\\\\]*+(?:\\\\(?:.|$)[^%@\\\\]*+)*+%@", firstString, firstString, firstString, firstString]];
+		firstStringPatternString = [NSString stringWithFormat:@"\\W%@[^%@\\\\]*+(?:\\\\(?:.|$)[^%@\\\\]*+)*+%@", firstString, firstString, firstString, firstString];
 		
-		secondStringPattern = [[ICUPattern alloc] initWithString:[NSString stringWithFormat:@"\\W%@[^%@\\\\]*+(?:\\\\(?:.|$)[^%@\\\\]*+)*+%@", secondString, secondString, secondString, secondString]];
+		secondStringPatternString = [NSString stringWithFormat:@"\\W%@[^%@\\\\]*+(?:\\\\(?:.|$)[^%@\\\\]*+)*+%@", secondString, secondString, secondString, secondString];
 	}
+	
+	// A delimiter that does not produce a valid pattern leaves these nil, and the string
+	// passes below simply find nothing.
+	firstStringPattern = [NSRegularExpression regularExpressionWithPattern:firstStringPatternString options:0 error:NULL];
+	secondStringPattern = [NSRegularExpression regularExpressionWithPattern:secondStringPatternString options:0 error:NULL];
 }
 
 
@@ -782,15 +787,8 @@ static void * const FRAMultiLineChangedContext = (void *)&FRAMultiLineChangedCon
         
         // Second string, first pass
         if (![secondString isEqualToString:@""] && [[FRADefaults valueForKey:@"ColourStrings"] boolValue] == YES) {
-            @try {
-                secondStringMatcher = [[ICUMatcher alloc] initWithPattern:secondStringPattern overString:searchString];
-            }
-            @catch (NSException *exception) {
-                return;
-            }
-            
-            while ([secondStringMatcher findNext]) {
-                foundRange = [secondStringMatcher rangeOfMatch];
+            for (NSTextCheckingResult *match in [secondStringPattern matchesInString:searchString options:0 range:NSMakeRange(0, searchStringLength)]) {
+                foundRange = [match range];
                 [self setColour:stringsColour range:NSMakeRange(foundRange.location + rangeLocation + 1, foundRange.length - 1)];
             }
         }
@@ -798,15 +796,8 @@ static void * const FRAMultiLineChangedContext = (void *)&FRAMultiLineChangedCon
         
         // First string
         if (![firstString isEqualToString:@""] && [[FRADefaults valueForKey:@"ColourStrings"] boolValue] == YES) {
-            @try {
-                firstStringMatcher = [[ICUMatcher alloc] initWithPattern:firstStringPattern overString:searchString];
-            }
-            @catch (NSException *exception) {
-                return;
-            }
-            
-            while ([firstStringMatcher findNext]) {
-                foundRange = [firstStringMatcher rangeOfMatch];
+            for (NSTextCheckingResult *match in [firstStringPattern matchesInString:searchString options:0 range:NSMakeRange(0, searchStringLength)]) {
+                foundRange = [match range];
                 if ([[firstLayoutManager temporaryAttributesAtCharacterIndex:foundRange.location + rangeLocation effectiveRange:NULL] isEqualToDictionary:stringsColour]) {
                     continue;
                 }
@@ -1054,15 +1045,8 @@ static void * const FRAMultiLineChangedContext = (void *)&FRAMultiLineChangedCon
         
         // Second string, second pass
         if (![secondString isEqualToString:@""] && [[FRADefaults valueForKey:@"ColourStrings"] boolValue] == YES) {
-            @try {
-                [secondStringMatcher reset];
-            }
-            @catch (NSException *exception) {
-                return;
-            }
-            
-            while ([secondStringMatcher findNext]) {
-                foundRange = [secondStringMatcher rangeOfMatch];
+            for (NSTextCheckingResult *match in [secondStringPattern matchesInString:searchString options:0 range:NSMakeRange(0, searchStringLength)]) {
+                foundRange = [match range];
                 if ([[firstLayoutManager temporaryAttributesAtCharacterIndex:foundRange.location + rangeLocation effectiveRange:NULL] isEqualToDictionary:stringsColour] || [[firstLayoutManager temporaryAttributesAtCharacterIndex:foundRange.location + rangeLocation effectiveRange:NULL] isEqualToDictionary:commentsColour]) {
                     continue;
                 }

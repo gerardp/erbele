@@ -27,7 +27,6 @@ Or open `Erbele.xcodeproj` in Xcode and press Run.
 | Directory | Contents |
 | --- | --- |
 | `Sources/` | Application code: `Classes/`, `TextView/`, `LineNumbers/` |
-| `Vendor/` | Vendored third-party code: `ICU/` |
 | `Resources/` | Interface files, graphics, syntax definitions, translations |
 | `Docs/` | Manual and screenshots |
 | `Other/` | Core Data model, default commands and snippets, scripting definition |

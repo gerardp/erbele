@@ -511,7 +511,6 @@ static id sharedInstance = nil;
 		[[document valueForKey:@"singleDocumentWindow"] setDocumentEdited:YES];
 	}
 	
-	[FRACurrentProject updateTabBar];
 }
 
 

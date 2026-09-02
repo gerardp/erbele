@@ -13,8 +13,8 @@ accumulated over twenty years rather than freshly designed.
   `Sources/`. This is where nearly all the application logic lives.
 * **Swift 5** covers newer additions: 7 files, roughly 400 lines.
 * AppKit, Core Data and TextKit 1. ARC is enabled throughout.
-* No external dependencies and no package manager. `PSMTabBar/` and `ICU/` are vendored
-  third-party code and live under `Vendor/` — do not edit them.
+* No external dependencies and no package manager. `ICU/` is vendored third-party
+  code and lives under `Vendor/` — do not edit it.
 * Built with Xcode from `Erbele.xcodeproj`. Deployment target is macOS 11.0; the product
   is a universal binary (Intel and Apple Silicon).
 
@@ -23,7 +23,7 @@ accumulated over twenty years rather than freshly designed.
 | Directory | Contents |
 | --- | --- |
 | `Sources/` | Application code: `Classes/`, `TextView/`, `LineNumbers/` |
-| `Vendor/` | Vendored third-party code: `PSMTabBar/`, `ICU/` |
+| `Vendor/` | Vendored third-party code: `ICU/` |
 | `Resources/` | Interface files, graphics, syntax definitions, translations |
 | `Docs/` | Manual and screenshots |
 | `Other/` | Core Data model, default commands and snippets, scripting definition |

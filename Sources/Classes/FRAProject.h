@@ -19,7 +19,6 @@
 @class FRADocumentManagedObject;
 @class FRATableViewDelegate;
 @class FRASplitViewDelegate;
-@class PSMTabBarControl;
 
 @interface FRAProject : NSDocument <NSTableViewDelegate,NSSplitViewDelegate,NSWindowDelegate,NSToolbarDelegate,NSMenuDelegate>
 {
@@ -38,8 +37,6 @@
 	
 	IBOutlet NSView *__unsafe_unretained leftDocumentsView;
 	
-	IBOutlet PSMTabBarControl *__unsafe_unretained tabBarControl;
-	IBOutlet NSTabView *__unsafe_unretained tabBarTabView;
 	
 	FRATextView *__unsafe_unretained lastTextViewInFocus;
 	
@@ -95,8 +92,6 @@
 @property (unsafe_unretained, readonly) IBOutlet NSView *leftDocumentsView;
 @property (unsafe_unretained, readonly) IBOutlet NSView *leftDocumentsTableView;
 
-@property (unsafe_unretained, readonly) IBOutlet PSMTabBarControl *tabBarControl;
-@property (unsafe_unretained, readonly) IBOutlet NSTabView *tabBarTabView;
 
 @property (nonatomic) BOOL shouldWindowClose;
 

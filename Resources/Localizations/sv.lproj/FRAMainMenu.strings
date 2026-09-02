@@ -119,8 +119,6 @@
 /* Class = "NSMenuItem"; title = "Show Documents View <do not localise>"; ObjectID = "300"; */
 "300.title" = "Show Documents View <do not localise>";
 
-/* Class = "NSMenuItem"; title = "Show Tab Bar <do not localise>"; ObjectID = "301"; */
-"301.title" = "Show Tab Bar <do not localise>";
 
 /* Class = "NSMenuItem"; title = "Show Status Bar <do not localise>"; ObjectID = "303"; */
 "303.title" = "Show Status Bar <do not localise>";

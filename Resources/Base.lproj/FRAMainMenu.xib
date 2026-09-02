@@ -414,12 +414,6 @@
                                     <action selector="showSizeSliderAction:" target="388" id="789"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Show Tab Bar &lt;do not localise&gt;" tag="15" alternate="YES" keyEquivalent="T" id="301">
-                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
-                                <connections>
-                                    <action selector="showTabBarAction:" target="388" id="549"/>
-                                </connections>
-                            </menuItem>
                             <menuItem title="Show Status Bar &lt;do not localise&gt;" tag="17" keyEquivalent="L" id="303">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                 <connections>

@@ -202,7 +202,6 @@ static id sharedInstance = nil;
 	
 	// Users can't set these in Preferences
 	dictionary[@"ShowStatusBar"] = @YES;
-	dictionary[@"ShowTabBar"] = @NO;
 	dictionary[@"HasInsertedDefaultSnippets"] = @NO;
 	dictionary[@"HasImportedFromVersion2"] = @NO;
 	dictionary[@"HasInsertedDefaultCommands3"] = @NO;

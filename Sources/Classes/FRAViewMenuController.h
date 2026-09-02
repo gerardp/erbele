@@ -29,8 +29,6 @@
 - (IBAction)showInvisibleCharactersAction:(id)sender;
 - (IBAction)viewDocumentInSeparateWindowAction:(id)sender;
 
-- (IBAction)showTabBarAction:(id)sender;
-- (void)performHideTabBar;
 
 - (IBAction)showDocumentsViewAction:(id)sender;
 - (void)performCollapseDocumentsView;

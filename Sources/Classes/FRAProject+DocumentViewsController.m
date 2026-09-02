@@ -17,7 +17,6 @@
 #import "FRAViewMenuController.h"
 #import "FRALineNumbers.h"
 
-#import "PSMTabBarControl.h"
 #import "FRADocumentManagedObject.h"
 
 @implementation FRAProject (DocumentViewsController)
@@ -25,16 +24,6 @@
 
 - (void)setDefaultViews
 {
-	[tabBarControl setTabView:tabBarTabView];
-	[tabBarControl setCanCloseOnlyTab:YES];
-	[tabBarControl setStyleNamed:@"Unified"];
-	[tabBarControl setAllowsDragBetweenWindows:YES];
-	[tabBarControl setCellMinWidth:100];
-	[tabBarControl setCellMaxWidth:280];
-	[tabBarControl setCellOptimumWidth:170];
-	[tabBarControl setDelegate:self];
-	[tabBarControl registerForDraggedTypes:@[NSFilenamesPboardType]];
-	
 	if ([project valueForKey:@"viewSize"] == nil) {
 		[project setValue:[FRADefaults valueForKey:@"ViewSize"] forKey:@"viewSize"];
 	}
@@ -123,55 +112,6 @@
 }
 
 
-- (void)updateTabBar
-{
-	if ([[FRADefaults valueForKey:@"ShowTabBar"] boolValue] == NO) {
-		return;
-	}
-	
-	id savedDelegate = [tabBarControl delegate]; // So it doesn't change the selected document when it updates its documents
-	[tabBarControl setDelegate:nil];
-	[FRAInterface removeAllTabBarObjectsForTabView:tabBarTabView];
-	
-	[[[FRAApplicationDelegate sharedInstance] managedObjectContext] processPendingChanges];
-	[documentsArrayController rearrangeObjects];
-	NSEnumerator *enumerator = [[documentsArrayController arrangedObjects] reverseObjectEnumerator];
-	for (id item in enumerator) {
-		NSTabViewItem *tabViewItem = [[NSTabViewItem alloc] initWithIdentifier:item];
-		if ([[item valueForKey:@"isEdited"] boolValue] == YES) {
-			[tabViewItem setLabel:[NSString stringWithFormat:@"%@ %C", [item valueForKey:@"name"], 0x270E]];
-		} else {
-			[tabViewItem setLabel:[item valueForKey:@"name"]];
-		}
-		[tabBarTabView insertTabViewItem:tabViewItem atIndex:0];
-	}
-	
-	[self selectSameDocumentInTabBarAsInDocumentsList];
-	[tabBarControl setDelegate:savedDelegate];
-}
-
-
-- (void)selectSameDocumentInTabBarAsInDocumentsList
-{
-	if ([[FRADefaults valueForKey:@"ShowTabBar"] boolValue] == NO) {
-		return;
-	}
-	NSArray *selectedObjects = [documentsArrayController selectedObjects];
-	if ([selectedObjects count] == 0) {
-		return;
-	}
-	
-	id selectedDocument = selectedObjects[0];
-	NSArray *array = [tabBarTabView tabViewItems];
-	for (id item in array) {
-		if ([item identifier] == selectedDocument) {
-			[tabBarTabView selectTabViewItem:item];
-			break;
-		}
-	}
-}
-
-
 - (void)resizeViewSizeSlider
 {	
 	CGFloat newWidth = [viewSelectionView bounds].size.width - 18;
@@ -185,44 +125,6 @@
 	}
 	
 }
-
-#pragma mark -
-#pragma mark Tab bar control delegates
-- (void)tabView:(NSTabView *)tabView willSelectTabViewItem:(NSTabViewItem *)tabViewItem
-{
-	FRAView view = [[project valueForKey:@"view"] integerValue];
-	
-	if (view == FRAListView) {
-		[documentsArrayController setSelectedObjects:@[[tabViewItem identifier]]];
-	}
-		
-}
-
-
-- (BOOL)tabView:(NSTabView *)tabView shouldCloseTabViewItem:(NSTabViewItem *)tabViewItem
-{
-	id document = [tabViewItem identifier];
-	[self checkIfDocumentIsUnsaved:document keepOpen:NO];
-	if (document == nil) {
-		return YES;
-	} else {
-		return NO;
-	}
-}
-
-
-- (void)updateDocumentOrderFromCells:(NSMutableArray *)cells
-{
-	id item;
-	NSInteger index = 0;
-	for (item in cells) {
-		[[[item representedObject] identifier] setValue:@(index) forKey:@"sortOrder"];
-		index++;
-	}
-	
-	[documentsArrayController rearrangeObjects];
-}
-
 
 #pragma mark -
 #pragma mark Split view delegates

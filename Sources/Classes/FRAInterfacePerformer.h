@@ -52,7 +52,6 @@
 - (NSInteger)currentLineNumber;
 - (NSInteger)currentFunctionIndexForFunctions:(NSArray *)functions;
 
-- (void)removeAllTabBarObjectsForTabView:(NSTabView *)tabView;
 
 - (void)changeViewWithAnimationForWindow:(NSWindow *)window oldView:(NSView *)oldView newView:(NSView *)newView newRect:(NSRect)newRect;
 

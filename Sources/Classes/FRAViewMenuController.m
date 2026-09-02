@@ -23,7 +23,6 @@
 #import "FRAProject+DocumentViewsController.h"
 #import "FRALayoutManager.h"
 
-#import "PSMTabBarControl.h"
 #import "FRADocumentManagedObject.h"
 #import "FRATextView.h"
 
@@ -236,12 +235,6 @@ static id sharedInstance = nil;
 			} else {
 				[anItem setTitle:NSLocalizedStringFromTable(@"Split Window Vertically", @"Localizable3", @"Split Window Vertically")];
 			}
-		} else if (tag == 15) { // Show Tab Bar
-			if ([[FRADefaults valueForKey:@"ShowTabBar"] boolValue] == YES) {
-				[anItem setTitle:NSLocalizedString(@"Hide Tab Bar", @"Hide Tab Bar in View menu")];
-			} else {
-				[anItem setTitle:NSLocalizedString(@"Show Tab Bar", @"Show Tab Bar in View menu")];
-			}
 		} else if (tag == 14) { // Show Documents List
 			if ([[[FRACurrentProject mainSplitView] subviews][0] frame].size.width != 0.0) {
 				[anItem setTitle:NSLocalizedString(@"Hide Documents List", @"Hide Documents List in View menu")];
@@ -357,63 +350,6 @@ static id sharedInstance = nil;
 	[FRAInterface insertDocumentIntoThirdContentView:document orderFront:YES];
 	[FRACurrentProject updateWindowTitleBarForDocument:document];
 	
-}
-
-
-- (IBAction)showTabBarAction:(id)sender
-{
-	NSArray *selectedObjects = [[FRACurrentProject documentsArrayController] selectedObjects];
-	id selectedDocument = nil;
-	if ([selectedObjects count] > 0) {
-		selectedDocument = selectedObjects[0];
-	}
-	
-	if ([[FRADefaults valueForKey:@"ShowTabBar"] boolValue] == YES) {
-		[FRADefaults setValue:@NO forKey:@"ShowTabBar"];
-		[self performHideTabBar];
-		
-	} else {
-		
-		NSArray *array = [[FRAProjectsController sharedDocumentController] documents];
-		for (id item in array) {
-			CGFloat tabBarHeight = [[item tabBarControl] bounds].size.height;
-			NSRect mainSplitViewRect = [[item mainSplitView] frame];
-			[FRADefaults setValue:@YES forKey:@"ShowTabBar"];
-			[[item tabBarControl] setHidden:NO];
-			[[item tabBarControl] hideTabBar:NO animate:YES];
-			[[item tabBarTabView] setHidden:NO];
-			
-			[[[item mainSplitView] animator] setFrame:NSMakeRect(mainSplitViewRect.origin.x, mainSplitViewRect.origin.y, mainSplitViewRect.size.width, mainSplitViewRect.size.height - tabBarHeight)];
-			[[item mainSplitView] adjustSubviews];
-			
-			
-			[item updateTabBar];
-			[[item window] setToolbar:[item projectWindowToolbar]];
-		}
-	}
-	
-	if (selectedDocument != nil) {
-		[[FRACurrentProject documentsArrayController] setSelectedObjects:@[selectedDocument]]; // Otherwise the selected document gets unselected when showing or hiding the tab bar
-	}
-}
-
-
-- (void)performHideTabBar
-{
-	NSArray *array = [[FRAProjectsController sharedDocumentController] documents];
-	for (id item in array) {
-		[FRAInterface removeAllTabBarObjectsForTabView:[item tabBarTabView]];
-		
-		CGFloat tabBarHeight = [[item tabBarControl] bounds].size.height;
-		NSRect mainSplitViewRect = [[item mainSplitView] frame];
-		
-		[[item tabBarControl] setHidden:YES];
-		//[[item tabBarControl] hideTabBar:YES animate:YES];
-		[[item tabBarTabView] setHidden:YES];
-		
-		[[[item mainSplitView] animator] setFrame:NSMakeRect(mainSplitViewRect.origin.x, mainSplitViewRect.origin.y, mainSplitViewRect.size.width, mainSplitViewRect.size.height + tabBarHeight)];
-		[[item mainSplitView] adjustSubviews];
-	}
 }
 
 

@@ -103,7 +103,6 @@
 	[[document valueForKey:@"lineNumbers"] updateLineNumbersForClipView:[[document valueForKey:@"firstTextScrollView"] contentView] checkWidth:NO recolour:YES]; // If the window has changed since the view was last visible
 	[FRAInterface updateStatusBar];
 	
-	[self selectSameDocumentInTabBarAsInDocumentsList];
 }
 
 @end

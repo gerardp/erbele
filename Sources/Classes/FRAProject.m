@@ -30,11 +30,10 @@
 #import "FRALineNumbers.h"
 #import "FRAPrintAccessoryController.h"
 #import "FRAPrintTextView.h"
-#import "PSMTabBarControl.h"
 
 @implementation FRAProject
 
-@synthesize firstDocument, secondDocument, lastTextViewInFocus, project, documentsArrayController, documentsTableView, firstContentView, secondContentView, statusBarTextField, mainSplitView, contentSplitView, secondContentViewNavigationBar, secondContentViewPopUpButton, leftDocumentsView, leftDocumentsTableView, tabBarControl, tabBarTabView;
+@synthesize firstDocument, secondDocument, lastTextViewInFocus, project, documentsArrayController, documentsTableView, firstContentView, secondContentView, statusBarTextField, mainSplitView, contentSplitView, secondContentViewNavigationBar, secondContentViewPopUpButton, leftDocumentsView, leftDocumentsTableView;
 
 
 - (id)init
@@ -194,15 +193,6 @@
 
 	if ([[FRADefaults valueForKey:@"ShowStatusBar"] boolValue] == NO) {
 		[[FRAViewMenuController sharedInstance] performHideStatusBar];
-	}
-
-	if ([[FRADefaults valueForKey:@"ShowTabBar"] boolValue] == NO) {
-		CGFloat tabBarHeight = [tabBarControl bounds].size.height;
-		NSRect mainSplitViewRect = [mainSplitView frame];
-		[tabBarControl setHidden:YES];
-		[mainSplitView setFrame:NSMakeRect(mainSplitViewRect.origin.x, mainSplitViewRect.origin.y, mainSplitViewRect.size.width, mainSplitViewRect.size.height + tabBarHeight)];
-	} else {
-		[self updateTabBar];
 	}
 
 	if ([project valueForKey:@"dividerPosition"] == nil) {
@@ -646,7 +636,6 @@
 
 - (void)documentsListHasUpdated
 {
-	[self updateTabBar];
 	[self buildSecondContentViewNavigationBarMenu];
 		
 	[self reloadData];

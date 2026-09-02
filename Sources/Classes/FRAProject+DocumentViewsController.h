@@ -23,9 +23,6 @@
 - (void)insertView:(FRAView)view;
 - (void)animateSizeSlider;
 - (void)reloadData;
-- (void)updateTabBar;
-- (void)selectSameDocumentInTabBarAsInDocumentsList;
-- (void)updateDocumentOrderFromCells:(NSMutableArray *)cells;
 
 - (void)resizeViewSizeSlider;
 

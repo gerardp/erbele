@@ -594,15 +594,6 @@ static id sharedInstance = nil;
 }
 
 
-- (void)removeAllTabBarObjectsForTabView:(NSTabView *)tabView
-{
-	NSArray *array = [tabView tabViewItems];
-	for (id item in array) {
-		[tabView removeTabViewItem:item];
-	}
-}
-
-
 - (void)changeViewWithAnimationForWindow:(NSWindow *)window oldView:(NSView *)oldView newView:(NSView *)newView newRect:(NSRect)newRect
 {	
     NSDictionary *windowResize = @{NSViewAnimationTargetKey: window, NSViewAnimationEndFrameKey: [NSValue valueWithRect:newRect]};

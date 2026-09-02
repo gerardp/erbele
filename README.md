@@ -1,61 +1,78 @@
-**I no longer maintain Erbele. We can choose from many better text editors for macOS these days.**
-
 # Erbele
 
-Erbele is a feature-rich text editor for macOS. Forked in 2016 from the Fraise github repository which was discontinued years ago, my main interest is to keep the popular app alive.
+Erbele is a feature-rich text editor for macOS: powerful but easy to use, with syntax
+highlighting for many languages, a project window for working on several documents at
+once, and a large set of tools for editing text.
 
-Supported macOS versions:
+## Requirements
 
-* macOS Sierra (10.12) - removed since 4.1.0
-* macOS High Sierra (10.13)
-* macOS Mojave (10.14)
-* macOS Catalina (10.15)
-* macOS Big Sur (11)
-* macOS Monterey (12)
-* macOS Ventura (13)
+* macOS 10.13 (High Sierra) or later
+* Xcode, to build it yourself
+* Runs natively on both Intel and Apple Silicon
 
-Architectures: 
+## Building
 
-* Intel
-* Apple Silicon (since version 3.11.0)
+There are no external dependencies, no package manager and nothing to install:
 
-Author: Andreas Bentele
+```sh
+git clone https://github.com/gerardp/erbele.git
+cd erbele
+xcodebuild -project Erbele.xcodeproj -scheme erbele -configuration Release build
+```
 
-Website: https://github.com/abentele/Erbele
+Or open `Erbele.xcodeproj` in Xcode and press Run.
 
-Based on the discontinued project [Fraise 3.7.3](https://github.com/jfmoy/Fraise).
-Fraise originally was forked from [Smultron 3.5.1](https://sourceforge.net/projects/smultron/), maintained by Peter Borg.
+## Repository layout
 
-# Screen shots
+| Directory | Contents |
+| --- | --- |
+| `Sources/` | Application code: `Classes/`, `TextView/`, `LineNumbers/` |
+| `Vendor/` | Vendored third-party code: `PSMTabBar/`, `ICU/` |
+| `Resources/` | Interface files, graphics, syntax definitions, translations |
+| `Docs/` | Manual and screenshots |
+| `Other/` | Core Data model, default commands and snippets, scripting definition |
 
-![Erbele, English](https://github.com/abentele/Erbele/raw/master/Erbele-screenshot_en.png)
+The full manual is at [Docs/Erbele-Manual.pdf](Docs/Erbele-Manual.pdf).
 
-Same picture with German language:
-![Erbele, German](https://github.com/abentele/Erbele/raw/master/Erbele-screenshot_de.png)
+## Screenshots
 
-# Downloads
+![Erbele, English](Docs/Erbele-screenshot_en.png)
 
-Download the source code here from github and build Erbele with Xcode by yourself.
+The same window in German:
 
-# Build release
+![Erbele, German](Docs/Erbele-screenshot_de.png)
 
-If you are familiar with git and Xcode, you can checkout the git repository and build the app by yourself.
+## Roadmap
 
-# Roadmap
-
-Currently my main interest is to fix bugs, enhance already existing features and implement some new features while retaining the original focus and feature-set:
+Fix bugs, improve what is already there and add the occasional feature, while keeping the
+original focus and feature set:
 
 * powerful, but easy to use
-* provide many helpful tools to edit texts
-* support for many code languages (e.g. syntax highlighting)
+* many helpful tools for editing text
+* support for many programming languages (syntax highlighting)
 
-For more details, see the [Issues list](https://github.com/abentele/Erbele/issues).
+## Contributing
 
-# Contribution
+Bug reports and ideas are welcome in the [issues list](https://github.com/gerardp/erbele/issues).
 
-Please add bugs and wishes to the issues list, or discuss existing issues with me and the community.
-If you would like to contribute, please let me know.
+English is the official language of this repository: code, comments, commit messages and
+issues are all written in English. See [AGENTS.md](AGENTS.md) for the project conventions.
 
-# Privacy
+## Privacy
 
-Read the [Privacy Statement](./Privacy.md)
+Read the [Privacy Statement](./Privacy.md).
+
+## License
+
+Apache License 2.0. See [LICENSE-2.0.txt](./LICENSE-2.0.txt).
+
+---
+
+## Fork
+
+This is a fork of [Erbele](https://github.com/abentele/Erbele) by Andreas Bentele, which
+is no longer maintained.
+
+Erbele itself was forked in 2016 from [Fraise 3.7.3](https://github.com/jfmoy/Fraise),
+which had in turn been forked from [Smultron 3.5.1](https://sourceforge.net/projects/smultron/),
+maintained by Peter Borg.

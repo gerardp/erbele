@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15705"/>
-        <plugIn identifier="com.apple.WebKitIBPlugin" version="15705"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -11,7 +10,7 @@
             <connections>
                 <outlet property="previewParserSelector" destination="3pN-wY-PeD" id="iLm-pR-ZJT"/>
                 <outlet property="previewWindow" destination="5" id="18"/>
-                <outlet property="webView" destination="13" id="17"/>
+                <outlet property="webViewContainer" destination="13" id="17"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
@@ -63,12 +62,10 @@ DQ
                     <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="11">
                         <rect key="frame" x="0.0" y="339" width="622" height="5"/>
                     </box>
-                    <webView translatesAutoresizingMaskIntoConstraints="NO" id="13">
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="13" userLabel="Web View Container">
                         <rect key="frame" x="0.0" y="0.0" width="622" height="341"/>
-                        <webPreferences key="preferences" defaultFontSize="12" defaultFixedFontSize="12">
-                            <nil key="identifier"/>
-                        </webPreferences>
-                    </webView>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </customView>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8">
                         <rect key="frame" x="9" y="351" width="67" height="16"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Base URL:" id="22">

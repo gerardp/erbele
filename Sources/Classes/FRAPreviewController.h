@@ -13,12 +13,17 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface FRAPreviewController : NSObject <WebFrameLoadDelegate, WebResourceLoadDelegate> {
+@interface FRAPreviewController : NSObject <WKNavigationDelegate, WKURLSchemeHandler> {
 	
 	IBOutlet NSWindow * previewWindow;
-    IBOutlet WebView *webView;
+    IBOutlet NSView *webViewContainer;
     IBOutlet NSPopUpButton *previewParserSelector;
-    
+
+    WKWebView *webView;
+    NSData *previewData;
+    NSString *previewPath;
+    NSString *previewDirectory;
+    NSUInteger previewGeneration;
 	NSPoint scrollPoint;
 }
 

@@ -19,7 +19,6 @@
 #import "FRAInterfacePerformer.h"
 #import "FRABasicPerformer.h"
 #import "FRAOpenSavePerformer.h"
-#import "FRADocumentsListCell.h"
 #import "FRAApplicationDelegate.h"
 #import "FRAToolsMenuController.h"
 #import "FRAProjectsController.h"
@@ -57,20 +56,16 @@ static id sharedInstance = nil;
 		[snippetCollectionsTableView setDataSource:[FRADragAndDropController sharedInstance]];
 		[snippetsTableView setDataSource:[FRADragAndDropController sharedInstance]];
 		
-		[snippetCollectionsTableView registerForDraggedTypes:@[NSFilenamesPboardType, @"FRAMovedSnippetType"]];
+		[snippetCollectionsTableView registerForDraggedTypes:@[NSPasteboardTypeFileURL, @"org.erbele.dragged-snippet"]];
 		[snippetCollectionsTableView setDraggingSourceOperationMask:(NSDragOperationCopy) forLocal:NO];
 		
-		[snippetsTableView registerForDraggedTypes:@[NSStringPboardType]];
+		[snippetsTableView registerForDraggedTypes:@[NSPasteboardTypeString]];
 		[snippetsTableView setDraggingSourceOperationMask:(NSDragOperationCopy) forLocal:NO];
 		
 		NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
 		[snippetCollectionsArrayController setSortDescriptors:@[sortDescriptor]];
 		[snippetsArrayController setSortDescriptors:@[sortDescriptor]];
 		
-		FRADocumentsListCell *cell = [[FRADocumentsListCell alloc] init];
-		[cell setWraps:NO];
-		[cell setLineBreakMode:NSLineBreakByTruncatingMiddle];
-		[[snippetCollectionsTableView tableColumnWithIdentifier:@"collection"] setDataCell:cell];
 		
 		NSToolbar *toolbar = [[NSToolbar alloc] initWithIdentifier:@"SnippetsToolbarIdentifier"];
 		[toolbar setShowsBaselineSeparator:YES];
@@ -197,8 +192,13 @@ static id sharedInstance = nil;
 
 - (void)performSnippetsImportWithPath:(NSString *)path
 {
-	NSData *data = [NSData dataWithContentsOfFile:path];
-	NSArray *snippets = (NSArray *)[NSKeyedUnarchiver unarchiveObjectWithData:data];
+    NSError *error = nil;
+    NSData *data = [NSData dataWithContentsOfFile:path options:0 error:&error];
+    NSArray *snippets = data ? FRAReadCollectionArchive(data, &error) : nil;
+    if (!snippets) {
+        [NSApp presentError:error];
+        return;
+    }
 	if ([snippets count] == 0) {
 		NSBeep();
 		return;
@@ -260,7 +260,12 @@ static id sharedInstance = nil;
                                                       [exportArray addObject:snippet];
                                                   }
                                                   
-                                                  NSData *data = [NSKeyedArchiver archivedDataWithRootObject:exportArray];
+                                                  NSError *error = nil;
+                                                  NSData *data = [NSKeyedArchiver archivedDataWithRootObject:exportArray requiringSecureCoding:YES error:&error];
+                                                  if (!data) {
+                                                      [NSApp presentError:error];
+                                                      return;
+                                                  }
                                                   [FRAOpenSave performDataSaveWith: data
                                                                               path: [[savePanel URL] path]];
                                               }
@@ -285,16 +290,6 @@ static id sharedInstance = nil;
 - (NSTextView *)snippetsTextView
 {
 	return snippetsTextView;
-}
-
-
-- (void)tableView:(NSTableView *)aTableView willDisplayCell:(id)aCell forTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
-{
-	if ([[FRADefaults valueForKey:@"SizeOfDocumentsListTextPopUp"] integerValue] == 0) {
-		[aCell setFont:[NSFont systemFontOfSize:11.0]];
-	} else {
-		[aCell setFont:[NSFont systemFontOfSize:13.0]];
-	}
 }
 
 

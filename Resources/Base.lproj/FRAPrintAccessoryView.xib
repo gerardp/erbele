@@ -45,7 +45,7 @@
                         </binding>
                         <binding destination="19" name="font" keyPath="values.PrintFont" id="24">
                             <dictionary key="options">
-                                <string key="NSValueTransformerName">NSUnarchiveFromData</string>
+                                <string key="NSValueTransformerName">FRAPreferenceArchiveTransformer</string>
                             </dictionary>
                         </binding>
                     </connections>

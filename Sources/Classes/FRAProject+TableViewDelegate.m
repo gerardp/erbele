@@ -13,7 +13,6 @@
 
 #import "FRAProject+TableViewDelegate.h"
 #import "FRAApplicationDelegate.h"
-#import "FRADocumentsListCell.h"
 #import "FRAInterfacePerformer.h"
 #import "FRAVariousPerformer.h"
 #import "FRALineNumbers.h"
@@ -39,49 +38,6 @@
 		[self performInsertFirstDocument:document];
 	}
 	
-}
-
-
-- (void)tableView:(NSTableView *)aTableView willDisplayCell:(id)aCell forTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
-{
-	if ([[FRADefaults valueForKey:@"SizeOfDocumentsListTextPopUp"] integerValue] == 0) {
-		[aCell setFont:[NSFont systemFontOfSize:11.0]];
-	} else {
-		[aCell setFont:[NSFont systemFontOfSize:13.0]];
-	}
-	
-	if (aTableView == [self documentsTableView]) {
-		id document = [[self documentsArrayController] arrangedObjects][rowIndex];
-		
-		if ([[document valueForKey:@"isNewDocument"] boolValue] == YES) {
-			[aTableView addToolTipRect:[aTableView rectOfRow:rowIndex] owner:UNSAVED_STRING userData:nil];
-		} else {
-			if ([[document valueForKey:@"fromExternal"] boolValue]) {
-				[aTableView addToolTipRect:[aTableView rectOfRow:rowIndex] owner:[document valueForKey:@"externalPath"] userData:nil];
-			} else {
-				[aTableView addToolTipRect:[aTableView rectOfRow:rowIndex] owner:[document valueForKey:@"path"] userData:nil];
-			}
-		}
-		
-		if ([[aTableColumn identifier] isEqualToString:@"name"]) {
-			NSImage *image;
-			if ([[document valueForKey:@"isEdited"] boolValue] == YES) {
-				image = [document valueForKey:@"unsavedIcon"];
-			} else {
-				image = [document valueForKey:@"icon"];
-			}
-
-			[(FRADocumentsListCell *)aCell setHeightAndWidth:[[[self valueForKey:@"project"] valueForKey:@"viewSize"] doubleValue]];
-			[(FRADocumentsListCell *)aCell setImage:image];
-			
-			if ([[FRADefaults valueForKey:@"ShowFullPathInDocumentsList"] boolValue] == YES) {
-				[(FRADocumentsListCell *)aCell setStringValue:[document valueForKey:@"nameWithPath"]];
-			} else {
-				[(FRADocumentsListCell *)aCell setStringValue:[document valueForKey:@"name"]];
-			}
-		}
-		
-	}
 }
 
 

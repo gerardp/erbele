@@ -141,18 +141,6 @@
 }
 
 
-- (BOOL)splitView:(NSSplitView *)splitView shouldCollapseSubview:(NSView *)subview forDoubleClickOnDividerAtIndex:(NSInteger)dividerIndex
-{
-	if (splitView == mainSplitView) {
-		[[FRAViewMenuController sharedInstance] performCollapseDocumentsView];
-	} else if (splitView == contentSplitView) {
-		[[FRAViewMenuController sharedInstance] performCollapse];
-	}
-
-	return NO;
-}
-
-
 - (BOOL)splitView:(NSSplitView *)sender canCollapseSubview:(NSView*)subview
 {
 	return YES;

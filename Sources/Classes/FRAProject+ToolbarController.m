@@ -44,8 +44,7 @@
 		@"FunctionToolbarItem",
 		@"InfoToolbarItem",
 		NSToolbarFlexibleSpaceItemIdentifier,
-		NSToolbarSpaceItemIdentifier,
-		NSToolbarSeparatorItemIdentifier];
+		NSToolbarSpaceItemIdentifier];
 }
 
 
@@ -116,7 +115,7 @@
 		
 		NSView *view = [[NSView alloc] initWithFrame:toolbarItemRect];
 		functionButton = [[NSButton alloc] initWithFrame:toolbarItemRect];
-		[functionButton setBezelStyle:NSTexturedRoundedBezelStyle];
+		[functionButton setBezelStyle:NSBezelStyleToolbar];
 		[functionButton setTitle:@""];
         [functionButton setImage:[NSImage toolbarSymbolNamed:@"list.bullet.indent" label:FUNCTION_STRING]];
 		[functionButton setTarget:self];

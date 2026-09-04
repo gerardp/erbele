@@ -27,6 +27,7 @@
 #import "FRAProject.h"
 #import "FRAProject+ToolbarController.h"
 #import "FRASearchField.h"
+#import "FRATableView.h"
 
 @implementation FRAApplication
 
@@ -83,23 +84,23 @@
 			} else if (flags == 1048576 || flags == 3145728 || flags == 1179648) { // Command, command with a numerical key and command with shift for the keyboards that requires it 
 				character = [event charactersIgnoringModifiers];
 				if ([character isEqualToString:@"+"] || [character isEqualToString:@"="]) {
-					NSFont *oldFont = [NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:@"TextFont"]];
+					NSFont *oldFont = [FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:@"TextFont"]];
 					CGFloat size = [oldFont pointSize] + 1;
-					[FRADefaults setValue:[NSArchiver archivedDataWithRootObject:[NSFont fontWithName:[oldFont fontName] size:size]] forKey:@"TextFont"];
+					[FRADefaults setValue:[NSKeyedArchiver archivedDataWithRootObject:[NSFont fontWithName:[oldFont fontName] size:size] requiringSecureCoding:YES error:nil] forKey:@"TextFont"];
 					return;
 				} else if ([character isEqualToString:@"-"]) {
-					NSFont *oldFont = [NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:@"TextFont"]];
+					NSFont *oldFont = [FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:@"TextFont"]];
 					CGFloat size = [oldFont pointSize];
 					if (size > 4) {
 						size--;
-						[FRADefaults setValue:[NSArchiver archivedDataWithRootObject:[NSFont fontWithName:[oldFont fontName] size:size]] forKey:@"TextFont"];
+						[FRADefaults setValue:[NSKeyedArchiver archivedDataWithRootObject:[NSFont fontWithName:[oldFont fontName] size:size] requiringSecureCoding:YES error:nil] forKey:@"TextFont"];
 						return;
 					}
 				}
 			}
 			
 		} else if (eventWindow == [[FRASnippetsController sharedInstance] snippetsWindow]) {
-			NSInteger editedColumn = [[[FRASnippetsController sharedInstance] snippetsTableView] editedColumn];
+			NSInteger editedColumn = [(FRATableView *)[[FRASnippetsController sharedInstance] snippetsTableView] editingColumn];
 			if (editedColumn != -1) {
 				NSTableColumn *tableColumn = [[[FRASnippetsController sharedInstance] snippetsTableView] tableColumns][editedColumn];
 				
@@ -127,7 +128,7 @@
 			
 			
 		} else if (eventWindow == [[FRACommandsController sharedInstance] commandsWindow]) {
-			NSInteger editedColumn = [[[FRACommandsController sharedInstance] commandsTableView] editedColumn];
+			NSInteger editedColumn = [(FRATableView *)[[FRACommandsController sharedInstance] commandsTableView] editingColumn];
 			if (editedColumn != -1) {
 				NSTableColumn *tableColumn = [[[FRACommandsController sharedInstance] commandsTableView] tableColumns][editedColumn];
 				

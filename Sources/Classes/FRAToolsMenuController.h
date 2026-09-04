@@ -12,7 +12,7 @@
 */
 #import <Cocoa/Cocoa.h>
 
-@interface FRAToolsMenuController : NSObject
+@interface FRAToolsMenuController : NSObject <NSMenuItemValidation>
 {
 	IBOutlet NSMenu *runCommandMenu;
 	IBOutlet NSMenu *insertSnippetMenu;

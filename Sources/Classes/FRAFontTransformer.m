@@ -29,7 +29,7 @@
 
 - (id)transformedValue:(id)value
 {
-	NSFont *font = [NSUnarchiver unarchiveObjectWithData:value];
+	NSFont *font = [FRAPreferenceArchiveTransformer unarchiveObjectWithData:value];
 	
 	return [NSString stringWithFormat:@"%@ - %.0fpt", [font fontName], [font pointSize]];
 }

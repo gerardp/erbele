@@ -13,7 +13,6 @@
 
 #import "NSToolbarItem+Erbele.h"
 #import "FRACommandsController.h"
-#import "FRADocumentsListCell.h"
 #import "FRAApplicationDelegate.h"
 #import "FRABasicPerformer.h"
 #import "FRADragAndDropController.h"
@@ -60,20 +59,16 @@ static id sharedInstance = nil;
 		[commandCollectionsTableView setDataSource:[FRADragAndDropController sharedInstance]];
 		[commandsTableView setDataSource:[FRADragAndDropController sharedInstance]];
 		
-		[commandCollectionsTableView registerForDraggedTypes:@[NSFilenamesPboardType, @"FRAMovedCommandType"]];
+		[commandCollectionsTableView registerForDraggedTypes:@[NSPasteboardTypeFileURL, @"org.erbele.dragged-command"]];
 		[commandCollectionsTableView setDraggingSourceOperationMask:(NSDragOperationCopy) forLocal:NO];
 		
-		[commandsTableView registerForDraggedTypes:@[NSStringPboardType]];
+		[commandsTableView registerForDraggedTypes:@[NSPasteboardTypeString]];
 		[commandsTableView setDraggingSourceOperationMask:(NSDragOperationCopy) forLocal:NO];
 		
 		NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
 		[commandCollectionsArrayController setSortDescriptors:@[sortDescriptor]];
 		[commandsArrayController setSortDescriptors:@[sortDescriptor]];
 		
-		FRADocumentsListCell *cell = [[FRADocumentsListCell alloc] init];
-		[cell setWraps:NO];
-		[cell setLineBreakMode:NSLineBreakByTruncatingMiddle];
-		[[commandCollectionsTableView tableColumnWithIdentifier:@"collection"] setDataCell:cell];
 		
 		
 		NSToolbar *toolbar = [[NSToolbar alloc] initWithIdentifier:@"CommandsToolbarIdentifier"];
@@ -176,8 +171,13 @@ static id sharedInstance = nil;
 
 - (void)performCommandsImportWithPath:(NSString *)path
 {
-	NSData *data = [NSData dataWithContentsOfFile:path];
-	NSArray *commands = (NSArray *)[NSKeyedUnarchiver unarchiveObjectWithData:data];
+    NSError *error = nil;
+    NSData *data = [NSData dataWithContentsOfFile:path options:0 error:&error];
+    NSArray *commands = data ? FRAReadCollectionArchive(data, &error) : nil;
+    if (!commands) {
+        [NSApp presentError:error];
+        return;
+    }
 	if ([commands count] == 0) {
 		return;
 	}
@@ -241,7 +241,12 @@ static id sharedInstance = nil;
                                                       [exportArray addObject: command];
                                                   }
                                                   
-                                                  NSData *data = [NSKeyedArchiver archivedDataWithRootObject:exportArray];
+                                                  NSError *error = nil;
+                                                  NSData *data = [NSKeyedArchiver archivedDataWithRootObject:exportArray requiringSecureCoding:YES error:&error];
+                                                  if (!data) {
+                                                      [NSApp presentError:error];
+                                                      return;
+                                                  }
                                                   [FRAOpenSave performDataSaveWith: data
                                                                               path: [[savePanel URL] path]];
                                               }
@@ -418,16 +423,6 @@ static id sharedInstance = nil;
 			[fileManager removeItemAtPath:item error:nil];
 		}
 		[temporaryFilesArray removeObject:item];
-	}
-}
-
-
-- (void)tableView:(NSTableView *)aTableView willDisplayCell:(id)aCell forTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
-{
-	if ([[FRADefaults valueForKey:@"SizeOfDocumentsListTextPopUp"] integerValue] == 0) {
-		[aCell setFont:[NSFont systemFontOfSize:11.0]];
-	} else {
-		[aCell setFont:[NSFont systemFontOfSize:13.0]];
 	}
 }
 

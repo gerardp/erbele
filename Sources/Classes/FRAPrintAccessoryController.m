@@ -101,7 +101,7 @@ static void * const FRAPrinterSettingsChangedContext = (void *)&FRAPrinterSettin
 - (IBAction)setPrintFontAction:(id)sender
 {
 	NSFontManager *fontManager = [NSFontManager sharedFontManager];
-	[fontManager setSelectedFont:[NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:@"PrintFont"]] isMultiple:NO];
+	[fontManager setSelectedFont:[FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:@"PrintFont"]] isMultiple:NO];
 	[fontManager orderFrontFontPanel:nil];
 }
 

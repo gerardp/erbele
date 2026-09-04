@@ -31,7 +31,7 @@ static void * const FRAFontOrColourValueChangedContext = (void *)&FRAFontOrColou
 		
         self.delegate = [FRALayoutManagerDelegate sharedInstance];
 
-        attributes = @{NSFontAttributeName: [NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:@"TextFont"]], NSForegroundColorAttributeName: [NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:[FRABasic lightDarkPreference: @"InvisibleCharactersColourWell"] ]]};
+        attributes = @{NSFontAttributeName: [FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:@"TextFont"]], NSForegroundColorAttributeName: [FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:[FRABasic lightDarkPreference: @"InvisibleCharactersColourWell"] ]]};
         unichar spaceUnichar = 0x02FD;
         spaceCharacter = [[NSString alloc] initWithCharacters:&spaceUnichar length:1];
 		unichar tabUnichar = 0x2192;
@@ -62,7 +62,7 @@ static void * const FRAFontOrColourValueChangedContext = (void *)&FRAFontOrColou
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
 	if (context == FRAFontOrColourValueChangedContext) {
-		attributes = @{NSFontAttributeName: [NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:@"TextFont"]], NSForegroundColorAttributeName: [NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:[FRABasic lightDarkPreference: @"InvisibleCharactersColourWell"] ]]};
+		attributes = @{NSFontAttributeName: [FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:@"TextFont"]], NSForegroundColorAttributeName: [FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:[FRABasic lightDarkPreference: @"InvisibleCharactersColourWell"] ]]};
 		[[self firstTextView] setNeedsDisplay:YES];
 	} else {
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];

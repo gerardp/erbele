@@ -71,10 +71,10 @@ static void * const FRAPageGuideChangedContext = (void *)&FRAPageGuideChangedCon
 	[self setAutomaticLinkDetectionEnabled:[[FRADefaults valueForKey:@"AutomaticLinkDetection"] boolValue]];
 	[self setAutomaticQuoteSubstitutionEnabled:[[FRADefaults valueForKey:@"AutomaticQuoteSubstitution"] boolValue]];
 	
-	[self setFont:[NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:@"TextFont"]]];
-	[self setTextColor:[NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:[FRABasic lightDarkPreference:@"TextColourWell"] ]]];
-	[self setInsertionPointColor:[NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:[FRABasic lightDarkPreference:@"TextColourWell"] ]]];
-	[self setBackgroundColor:[NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:[FRABasic lightDarkPreference:@"BackgroundColourWell"] ]]];
+	[self setFont:[FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:@"TextFont"]]];
+	[self setTextColor:[FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:[FRABasic lightDarkPreference:@"TextColourWell"] ]]];
+	[self setInsertionPointColor:[FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:[FRABasic lightDarkPreference:@"TextColourWell"] ]]];
+	[self setBackgroundColor:[FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:[FRABasic lightDarkPreference:@"BackgroundColourWell"] ]]];
 	
 	[self setAutomaticDataDetectionEnabled:YES];
 	[self setAutomaticTextReplacementEnabled:YES];
@@ -97,7 +97,7 @@ static void * const FRAPageGuideChangedContext = (void *)&FRAPageGuideChangedCon
 	[defaultsController addObserver:self forKeyPath:@"values.SmartInsertDelete" options:NSKeyValueObservingOptionNew context:FRASmartInsertDeleteChangedContext];
 	[[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(darkModeChanged:) name:@"AppleInterfaceThemeChangedNotification" object:nil];
     
-	lineHeight = [[[self textContainer] layoutManager] defaultLineHeightForFont:[NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:@"TextFont"]]];
+	lineHeight = [[[self textContainer] layoutManager] defaultLineHeightForFont:[FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:@"TextFont"]]];
 }
 
 
@@ -122,17 +122,17 @@ static void * const FRAPageGuideChangedContext = (void *)&FRAPageGuideChangedCon
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
 	if (context == FRATextFontChangedContext) {
-		[self setFont:[NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:@"TextFont"]]];
-		lineHeight = [[[self textContainer] layoutManager] defaultLineHeightForFont:[NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:@"TextFont"]]];
+		[self setFont:[FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:@"TextFont"]]];
+		lineHeight = [[[self textContainer] layoutManager] defaultLineHeightForFont:[FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:@"TextFont"]]];
 		[[FRACurrentDocument valueForKey:@"lineNumbers"] updateLineNumbersForClipView:[[self enclosingScrollView] contentView] checkWidth:NO recolour:YES];
 		[self setPageGuideValues];
 	} else if (context == FRATextColourChangedContext) {
-		[self setTextColor:[NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:[ FRABasic lightDarkPreference: @"TextColourWell"] ]]];
-		[self setInsertionPointColor:[NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:[ FRABasic lightDarkPreference: @"TextColourWell"] ]]];
+		[self setTextColor:[FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:[ FRABasic lightDarkPreference: @"TextColourWell"] ]]];
+		[self setInsertionPointColor:[FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:[ FRABasic lightDarkPreference: @"TextColourWell"] ]]];
 		[self setPageGuideValues];
 		[self updateIBeamCursor];
 	} else if (context == FRABackgroundColourChangedContext) {
-		[self setBackgroundColor:[NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:[ FRABasic lightDarkPreference: @"BackgroundColourWell"]]]];
+		[self setBackgroundColor:[FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:[ FRABasic lightDarkPreference: @"BackgroundColourWell"]]]];
 	} else if (context == FRASmartInsertDeleteChangedContext) {
 		[self setSmartInsertDeleteEnabled:[[FRADefaults valueForKey:@"SmartInsertDelete"] boolValue]];
 	} else if (context == FRATabWidthChangedContext) {
@@ -439,7 +439,7 @@ static void * const FRAPageGuideChangedContext = (void *)&FRAPageGuideChangedCon
 	while (numberOfSpaces--) {
 		[sizeString appendString:@" "];
 	}
-	NSDictionary *sizeAttribute = @{NSFontAttributeName: [NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:@"TextFont"]]};
+	NSDictionary *sizeAttribute = @{NSFontAttributeName: [FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:@"TextFont"]]};
 	CGFloat sizeOfTab = [sizeString sizeWithAttributes:sizeAttribute].width;
 	
 	NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
@@ -470,12 +470,12 @@ static void * const FRAPageGuideChangedContext = (void *)&FRAPageGuideChangedCon
 
 - (void)setPageGuideValues
 {
-	NSDictionary *sizeAttribute = @{NSFontAttributeName: [NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:@"TextFont"]]};
+	NSDictionary *sizeAttribute = @{NSFontAttributeName: [FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:@"TextFont"]]};
 	NSString *sizeString = @" ";
 	CGFloat sizeOfCharacter = [sizeString sizeWithAttributes:sizeAttribute].width;
 	pageGuideX = (sizeOfCharacter * ([[FRADefaults valueForKey:@"ShowPageGuideAtColumn"] integerValue] + 1)) - 1.5; // -1.5 to put it between the two characters and draw only on one pixel and not two (as the system draws it in a special way), and that's also why the width above is set to zero 
 	
-	NSColor *color = [NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:@"TextColourWell"]];
+	NSColor *color = [FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:@"TextColourWell"]];
 	pageGuideColour = [color colorWithAlphaComponent:([color alphaComponent] / 4)]; // Use the same colour as the text but with more transparency
 	
 	showPageGuide = [[FRADefaults valueForKey:@"ShowPageGuide"] boolValue];
@@ -633,7 +633,7 @@ static void * const FRAPageGuideChangedContext = (void *)&FRAPageGuideChangedCon
 
 - (void)updateIBeamCursor
 {
-	NSColor *textColour = [[NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:@"TextColourWell"]] colorUsingColorSpaceName:NSCalibratedWhiteColorSpace];
+	NSColor *textColour = [[FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:@"TextColourWell"]] colorUsingColorSpace:[NSColorSpace genericGrayColorSpace]];
 	
 	if (textColour != nil && [textColour whiteComponent] == 0.0 && [textColour alphaComponent] == 1.0) { // Keep the original cursor if it's black
 		[self setColouredIBeamCursor:[NSCursor IBeamCursor]];
@@ -643,7 +643,7 @@ static void * const FRAPageGuideChangedContext = (void *)&FRAPageGuideChangedCon
     } else {
 		NSImage *cursorImage = [[NSCursor IBeamCursor] image];
 		[cursorImage lockFocus];
-		[(NSColor *)[NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:@"TextColourWell"]] set];
+		[(NSColor *)[FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:@"TextColourWell"]] set];
 		NSRectFillUsingOperation(NSMakeRect(0, 0, [cursorImage size].width, [cursorImage size].height), NSCompositingOperationSourceAtop);
 		[cursorImage unlockFocus];
 		[self setColouredIBeamCursor:[[NSCursor alloc] initWithImage:cursorImage hotSpot:[[NSCursor IBeamCursor] hotSpot]]];
@@ -671,9 +671,9 @@ static void * const FRAPageGuideChangedContext = (void *)&FRAPageGuideChangedCon
 }
 
 -(void) darkModeFix {
-    [self setBackgroundColor: [NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:[ FRABasic lightDarkPreference: @"BackgroundColourWell" ] ]]];
-    [self setTextColor: [NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey: [ FRABasic lightDarkPreference: @"TextColourWell"] ]]];
-    [self setInsertionPointColor:[NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:[ FRABasic lightDarkPreference: @"TextColourWell"] ]]];
+    [self setBackgroundColor: [FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:[ FRABasic lightDarkPreference: @"BackgroundColourWell" ] ]]];
+    [self setTextColor: [FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey: [ FRABasic lightDarkPreference: @"TextColourWell"] ]]];
+    [self setInsertionPointColor:[FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:[ FRABasic lightDarkPreference: @"TextColourWell"] ]]];
     [self setPageGuideValues];
     [self updateIBeamCursor];
 }

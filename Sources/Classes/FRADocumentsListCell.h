@@ -13,13 +13,5 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface FRADocumentsListCell : NSTextFieldCell {
-@private
-    NSImage	*image;
-	CGFloat heightAndWidth; // heigth and weight are set equal, thus describing a square
-}
-
-@property (strong) NSImage *image;
-@property (assign, readwrite) CGFloat heightAndWidth;
-
+@interface FRADocumentsListCell : NSTableCellView <NSTextFieldDelegate>
 @end

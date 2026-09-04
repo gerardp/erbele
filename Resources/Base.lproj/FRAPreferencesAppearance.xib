@@ -260,7 +260,7 @@
                     <connections>
                         <binding destination="55" name="value" keyPath="values.TextColourWell" id="61">
                             <dictionary key="options">
-                                <string key="NSValueTransformerName">NSUnarchiveFromData</string>
+                                <string key="NSValueTransformerName">FRAPreferenceArchiveTransformer</string>
                             </dictionary>
                         </binding>
                     </connections>
@@ -275,7 +275,7 @@
                     <connections>
                         <binding destination="55" name="value" keyPath="values.DMTextColourWell" id="jd6-SA-fS1">
                             <dictionary key="options">
-                                <string key="NSValueTransformerName">NSUnarchiveFromData</string>
+                                <string key="NSValueTransformerName">FRAPreferenceArchiveTransformer</string>
                             </dictionary>
                         </binding>
                     </connections>
@@ -290,7 +290,7 @@
                     <connections>
                         <binding destination="55" name="value" keyPath="values.BackgroundColourWell" id="63">
                             <dictionary key="options">
-                                <string key="NSValueTransformerName">NSUnarchiveFromData</string>
+                                <string key="NSValueTransformerName">FRAPreferenceArchiveTransformer</string>
                             </dictionary>
                         </binding>
                     </connections>
@@ -305,7 +305,7 @@
                     <connections>
                         <binding destination="55" name="value" keyPath="values.DMBackgroundColourWell" id="iZH-jJ-JAP">
                             <dictionary key="options">
-                                <string key="NSValueTransformerName">NSUnarchiveFromData</string>
+                                <string key="NSValueTransformerName">FRAPreferenceArchiveTransformer</string>
                             </dictionary>
                         </binding>
                     </connections>
@@ -336,7 +336,7 @@
                     <connections>
                         <binding destination="55" name="value" keyPath="values.GutterTextColourWell" id="1ra-eE-K50">
                             <dictionary key="options">
-                                <string key="NSValueTransformerName">NSUnarchiveFromData</string>
+                                <string key="NSValueTransformerName">FRAPreferenceArchiveTransformer</string>
                             </dictionary>
                         </binding>
                     </connections>
@@ -351,7 +351,7 @@
                     <connections>
                         <binding destination="55" name="value" keyPath="values.DMGutterTextColourWell" id="MqM-gP-duX">
                             <dictionary key="options">
-                                <string key="NSValueTransformerName">NSUnarchiveFromData</string>
+                                <string key="NSValueTransformerName">FRAPreferenceArchiveTransformer</string>
                             </dictionary>
                         </binding>
                     </connections>
@@ -366,7 +366,7 @@
                     <connections>
                         <binding destination="55" name="value" keyPath="values.GutterBackgroundColourWell" id="Ya8-wf-eYN">
                             <dictionary key="options">
-                                <string key="NSValueTransformerName">NSUnarchiveFromData</string>
+                                <string key="NSValueTransformerName">FRAPreferenceArchiveTransformer</string>
                             </dictionary>
                         </binding>
                     </connections>
@@ -381,7 +381,7 @@
                     <connections>
                         <binding destination="55" name="value" keyPath="values.DMGutterBackgroundColourWell" id="GUt-WP-bKp">
                             <dictionary key="options">
-                                <string key="NSValueTransformerName">NSUnarchiveFromData</string>
+                                <string key="NSValueTransformerName">FRAPreferenceArchiveTransformer</string>
                             </dictionary>
                         </binding>
                     </connections>
@@ -412,7 +412,7 @@
                         </binding>
                         <binding destination="55" name="font" keyPath="values.TextFont" id="59">
                             <dictionary key="options">
-                                <string key="NSValueTransformerName">NSUnarchiveFromData</string>
+                                <string key="NSValueTransformerName">FRAPreferenceArchiveTransformer</string>
                             </dictionary>
                         </binding>
                     </connections>

@@ -14,7 +14,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface FRAApplicationDelegate : NSObject <NSApplicationDelegate>
+@interface FRAApplicationDelegate : NSObject <NSApplicationDelegate, NSFontChanging>
 {
     NSPersistentStoreCoordinator *persistentStoreCoordinator;
     NSManagedObjectModel *managedObjectModel;

@@ -11,88 +11,47 @@
  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-// Based on ImageAndTextCell.m by Chuck Pisula (Apple)
-// look at https://github.com/jdg/opmlviewer
-
 #import "FRADocumentsListCell.h"
 
 @implementation FRADocumentsListCell
 
-@synthesize image, heightAndWidth;
-
-- (id)copyWithZone:(NSZone *)zone
+- (void)awakeFromNib
 {
-	FRADocumentsListCell *cell = [super copyWithZone:zone];
-    cell.image = self.image;
-	return cell;
+    [super awakeFromNib];
+    self.textField.delegate = self;
 }
 
-
-- (NSRect)imageFrameForCellFrame:(NSRect)cellFrame 
+- (void)viewWillDraw
 {
-    if (image != nil) {
-        NSRect imageFrame;
-        imageFrame.size = NSMakeSize(heightAndWidth, heightAndWidth);
-        imageFrame.origin = cellFrame.origin;
-        imageFrame.origin.x += 3;
-        imageFrame.origin.y += ceil((cellFrame.size.height - imageFrame.size.height) / 2);
-        return imageFrame;
-    } else {
-        return NSZeroRect;
-	}
-}
-
-
-- (void)editWithFrame:(NSRect)aRect inView:(NSView *)controlView editor:(NSText *)textObj delegate:(id)anObject event:(NSEvent *)theEvent
-{
-    NSRect textFrame = aRect;
-	NSSize contentSize = self.cellSize;
-    textFrame.origin.y += ceil((textFrame.size.height - contentSize.height) / 2);
-    textFrame.size.height = contentSize.height;
-    [super editWithFrame:textFrame inView:controlView editor:textObj delegate:anObject event:theEvent];
-}
-
-
-- (void)selectWithFrame:(NSRect)aRect inView:(NSView *)controlView editor:(NSText *)textObj delegate:(id)anObject start:(NSInteger)selStart length:(NSInteger)selLength
-{
-	NSRect textFrame = aRect;
-	NSSize contentSize = self.cellSize;
-    textFrame.origin.y += ceil((textFrame.size.height - contentSize.height) / 2);
-    textFrame.size.height = contentSize.height;
-    [super selectWithFrame:textFrame inView:controlView editor:textObj delegate:anObject start:selStart length:selLength];
-}
-
-
-- (void)drawInteriorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
-{
-    if (image != nil) {
-        NSRect imageFrame = NSZeroRect;
-        NSSize imageSize = NSMakeSize(heightAndWidth, heightAndWidth);
-        NSDivideRect(cellFrame, &imageFrame, &cellFrame, 3 + imageSize.width, NSMinXEdge);
-        if (self.drawsBackground) {
-            [self.backgroundColor set];
-            NSRectFill(imageFrame);
-        }
-        [image drawInRect:imageFrame fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:1.0 respectFlipped:YES hints:nil];
+    self.textField.font = [NSFont systemFontOfSize:[[FRADefaults valueForKey:@"SizeOfDocumentsListTextPopUp"] integerValue] == 0 ? 11 : 13];
+    if (self.imageView && self.objectValue) {
+        id document = self.objectValue;
+        self.imageView.image = [document valueForKey:[[document valueForKey:@"isEdited"] boolValue] ? @"unsavedIcon" : @"icon"];
+        self.textField.stringValue = [document valueForKey:[[FRADefaults valueForKey:@"ShowFullPathInDocumentsList"] boolValue] ? @"nameWithPath" : @"name"] ?: @"";
+        self.toolTip = [[document valueForKey:@"isNewDocument"] boolValue] ? UNSAVED_STRING :
+            [document valueForKey:[[document valueForKey:@"fromExternal"] boolValue] ? @"externalPath" : @"path"];
     }
-    NSSize contentSize = self.cellSize;
-    cellFrame.origin.y += ceil((cellFrame.size.height - contentSize.height) / 2);
-    cellFrame.size.height = contentSize.height;
-    if (cellFrame.origin.x < heightAndWidth) {
-        // This is to make sure that the text is properly aligned before the icon has been created in a separate thread
-        cellFrame.origin.x += heightAndWidth + 3;
-    }
-    [super drawInteriorWithFrame:cellFrame inView:controlView];
+    [super viewWillDraw];
 }
 
-
-- (NSSize)cellSize 
+- (void)layout
 {
-    NSSize cellSize = super.cellSize;
-    cellSize.width += heightAndWidth + 3;
-    return cellSize;
+    [super layout];
+    CGFloat inset = 2;
+    if (self.imageView) {
+        CGFloat size = MAX(0, NSHeight(self.bounds) - 1);
+        self.imageView.frame = NSMakeRect(0, 0, size, size);
+        inset = size + 3;
+    }
+    CGFloat height = ceil(self.textField.font.ascender - self.textField.font.descender + 3);
+    self.textField.frame = NSMakeRect(inset, floor((NSHeight(self.bounds) - height) / 2), MAX(0, NSWidth(self.bounds) - inset - 2), height);
+}
+
+- (void)controlTextDidEndEditing:(NSNotification *)notification
+{
+    if ([notification.userInfo[@"NSTextMovement"] integerValue] == NSReturnTextMovement) {
+        [self.window makeFirstResponder:self.enclosingScrollView.documentView];
+    }
 }
 
 @end
-
-

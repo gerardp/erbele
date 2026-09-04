@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A12CBE020000000000000001 /* FRAPasteboard.m in Sources */ = {isa = PBXBuildFile; fileRef = A12CBE020000000000000002 /* FRAPasteboard.m */; };
+		A12CBE010000000000000001 /* FRAArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = A12CBE010000000000000002 /* FRAArchive.m */; };
 		1FB593BA113EE34600ECB6C0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1FB593B9113EE34600ECB6C0 /* Localizable.strings */; };
 		1FB593BD113EE35E00ECB6C0 /* Localizable3.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1FB593BC113EE35E00ECB6C0 /* Localizable3.strings */; };
 		1FF6CD34115543F1002681B2 /* FRAPreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FF6CD31115543F1002681B2 /* FRAPreferences.xib */; };
@@ -143,6 +145,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A12CBE020000000000000002 /* FRAPasteboard.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = FRAPasteboard.m; path = Sources/Classes/FRAPasteboard.m; sourceTree = "<group>"; };
+		A12CBE020000000000000003 /* FRAPasteboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FRAPasteboard.h; path = Sources/Classes/FRAPasteboard.h; sourceTree = "<group>"; };
+		A12CBE010000000000000002 /* FRAArchive.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = FRAArchive.m; path = Sources/Classes/FRAArchive.m; sourceTree = "<group>"; };
+		A12CBE010000000000000003 /* FRAArchive.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FRAArchive.h; path = Sources/Classes/FRAArchive.h; sourceTree = "<group>"; };
 		089C1660FE840EACC02AAC07 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; path = Resources/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FBA07B3F13500E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
@@ -764,6 +770,10 @@
 		7F5C24A40B73B9CC00D2EDDC /* FontTransformer */ = {
 			isa = PBXGroup;
 			children = (
+				A12CBE010000000000000003 /* FRAArchive.h */,
+				A12CBE010000000000000002 /* FRAArchive.m */,
+				A12CBE020000000000000003 /* FRAPasteboard.h */,
+				A12CBE020000000000000002 /* FRAPasteboard.m */,
 				7F980AC40B73B6A2000A9140 /* FRAFontTransformer.h */,
 				7F980AC50B73B6A2000A9140 /* FRAFontTransformer.m */,
 			);
@@ -1086,6 +1096,8 @@
 				7F980B100B73B6A2000A9140 /* FRACommandsController.m in Sources */,
 				7F980B130B73B6A2000A9140 /* FRADragAndDropController.m in Sources */,
 				7F980B160B73B6A2000A9140 /* FRAFileMenuController.m in Sources */,
+				A12CBE010000000000000001 /* FRAArchive.m in Sources */,
+				A12CBE020000000000000001 /* FRAPasteboard.m in Sources */,
 				7F980B180B73B6A2000A9140 /* FRAFontTransformer.m in Sources */,
 				7F980B1A0B73B6A2000A9140 /* FRAGutterTextView.m in Sources */,
 				7F980B1C0B73B6A2000A9140 /* FRAInfoController.m in Sources */,
@@ -1486,7 +1498,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 7.1.0;
+				CURRENT_PROJECT_VERSION = 8.0;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_APP_SANDBOX = YES;
@@ -1508,7 +1520,7 @@
 				INSTALL_PATH = "$(LOCAL_APPS_DIR)";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 7.1.0;
+				MARKETING_VERSION = 8.0;
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.erbele.Erbele;
 				PRODUCT_NAME = Erbele;
@@ -1535,7 +1547,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 7.1.0;
+				CURRENT_PROJECT_VERSION = 8.0;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
@@ -1558,7 +1570,7 @@
 				INSTALL_PATH = "$(LOCAL_APPS_DIR)";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 7.1.0;
+				MARKETING_VERSION = 8.0;
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.erbele.Erbele;
 				PRODUCT_NAME = Erbele;

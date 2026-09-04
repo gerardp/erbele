@@ -15,7 +15,6 @@
 #import "FRAProject.h"
 #import "FRABasicPerformer.h"
 #import "FRAProjectsController.h"
-#import "FRADocumentsListCell.h"
 #import "FRAViewMenuController.h"
 #import "FRADragAndDropController.h"
 #import "FRAApplicationDelegate.h"
@@ -78,7 +77,7 @@
 	[[self window] setDelegate:self];
 	
 	[documentsTableView setDataSource:[FRADragAndDropController sharedInstance]];
-	[documentsTableView registerForDraggedTypes:@[NSFilenamesPboardType, NSStringPboardType, @"FRAMovedDocumentType"]];
+	[documentsTableView registerForDraggedTypes:@[NSPasteboardTypeFileURL, NSPasteboardTypeString, @"org.erbele.dragged-document"]];
 	[documentsTableView setDraggingSourceOperationMask:(NSDragOperationCopy | NSDragOperationMove) forLocal:NO];
 	
 	
@@ -103,7 +102,7 @@
 
 - (NSData *)dataOfType:(NSString *)typeName error:(NSError **)outError
 {	
-	return [NSArchiver archivedDataWithRootObject:[self dictionaryOfDocumentsInProject]];
+	return [NSKeyedArchiver archivedDataWithRootObject:[self dictionaryOfDocumentsInProject] requiringSecureCoding:YES error:outError];
 }
 
 
@@ -155,8 +154,8 @@
 	[printInfo setHorizontallyCentered:NO];
 	[printInfo setVerticallyCentered:NO];
 	
-	[printInfo setHorizontalPagination:NSAutoPagination];
-	[printInfo setVerticalPagination:NSAutoPagination];
+	[printInfo setHorizontalPagination:NSPrintingPaginationModeAutomatic];
+	[printInfo setVerticalPagination:NSPrintingPaginationModeAutomatic];
 	
     return printInfo;
 }
@@ -186,10 +185,6 @@
 {
 	[[statusBarTextField cell] setBackgroundStyle:NSBackgroundStyleRaised];
 	
-	FRADocumentsListCell *cell = [[FRADocumentsListCell alloc] init];
-	[cell setWraps:NO];
-	[cell setLineBreakMode:NSLineBreakByTruncatingMiddle];
-	[[documentsTableView tableColumnWithIdentifier:@"name"] setDataCell:cell];
 
 	if ([[FRADefaults valueForKey:@"ShowStatusBar"] boolValue] == NO) {
 		[[FRAViewMenuController sharedInstance] performHideStatusBar];

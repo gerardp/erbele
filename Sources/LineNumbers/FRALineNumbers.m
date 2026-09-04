@@ -40,7 +40,7 @@ static void * const FRATextFontChangedContext = (void *)&FRATextFontChangedConte
 		document = theDocument;
 		zeroPoint = NSMakePoint(0, 0);
 		
-		attributes = @{NSFontAttributeName: [NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:@"TextFont"]]};
+		attributes = @{NSFontAttributeName: [FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:@"TextFont"]]};
 		NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
 		[defaultsController addObserver:self forKeyPath:@"values.TextFont" options:NSKeyValueObservingOptionNew context:FRATextFontChangedContext];
 	}
@@ -59,7 +59,7 @@ static void * const FRATextFontChangedContext = (void *)&FRATextFontChangedConte
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
 	if (context == FRATextFontChangedContext) {
-		attributes = @{NSFontAttributeName: [NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:@"TextFont"]]};
+		attributes = @{NSFontAttributeName: [FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:@"TextFont"]]};
         [self updateLineNumbersCheckWidth:YES recolour:YES];
 	} else {
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];

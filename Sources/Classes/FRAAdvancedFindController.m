@@ -483,20 +483,20 @@ static id sharedInstance = nil;
 	
 		[[findResultTextField cell] setBackgroundStyle:NSBackgroundStyleRaised];
 				
-		[findResultsOutlineView setBackgroundColor:[NSColor controlAlternatingRowBackgroundColors][1]];
+		[findResultsOutlineView setBackgroundColor:[NSColor alternatingContentBackgroundColors][1]];
 		
 		[findResultsOutlineView setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleSourceList];
 		
 		FRAAdvancedFindScope searchScope = [[FRADefaults valueForKey:@"AdvancedFindScope"] integerValue];
 		
 		if (searchScope == FRACurrentDocumentScope) {
-			[currentDocumentScope setState:NSOnState];
+			[currentDocumentScope setState:NSControlStateValueOn];
 		} else if (searchScope == FRACurrentProjectScope) {
-			[currentProjectScope setState:NSOnState];
+			[currentProjectScope setState:NSControlStateValueOn];
 		} else if (searchScope == FRAAllDocumentsScope) {
-			[allDocumentsScope setState:NSOnState];
+			[allDocumentsScope setState:NSControlStateValueOn];
 		} else if (searchScope == FRAParentDirectoryScope) {
-			[parentDirectoryScope setState:NSOnState];
+			[parentDirectoryScope setState:NSControlStateValueOn];
 		}
 		
 		[self.findResultsTreeController setContent:nil];
@@ -716,25 +716,25 @@ static id sharedInstance = nil;
 	FRAAdvancedFindScope searchScope = [sender tag];
 
 	if (searchScope == FRACurrentDocumentScope) {
-		[currentProjectScope setState:NSOffState];
-		[allDocumentsScope setState:NSOffState];
-		[currentDocumentScope setState:NSOnState]; // If the user has clicked an already clicked button make sure it is on and not turned off
-		[parentDirectoryScope setState:NSOffState];
+		[currentProjectScope setState:NSControlStateValueOff];
+		[allDocumentsScope setState:NSControlStateValueOff];
+		[currentDocumentScope setState:NSControlStateValueOn]; // If the user has clicked an already clicked button make sure it is on and not turned off
+		[parentDirectoryScope setState:NSControlStateValueOff];
 	} else if (searchScope == FRACurrentProjectScope) {
-		[currentDocumentScope setState:NSOffState];
-		[allDocumentsScope setState:NSOffState];
-		[currentProjectScope setState:NSOnState];
-		[parentDirectoryScope setState:NSOffState];
+		[currentDocumentScope setState:NSControlStateValueOff];
+		[allDocumentsScope setState:NSControlStateValueOff];
+		[currentProjectScope setState:NSControlStateValueOn];
+		[parentDirectoryScope setState:NSControlStateValueOff];
 	} else if (searchScope == FRAAllDocumentsScope) {
-		[currentDocumentScope setState:NSOffState];
-		[currentProjectScope setState:NSOffState];
-		[allDocumentsScope setState:NSOnState];
-		[parentDirectoryScope setState:NSOffState];
+		[currentDocumentScope setState:NSControlStateValueOff];
+		[currentProjectScope setState:NSControlStateValueOff];
+		[allDocumentsScope setState:NSControlStateValueOn];
+		[parentDirectoryScope setState:NSControlStateValueOff];
 	} else if (searchScope == FRAParentDirectoryScope) {
-		[currentDocumentScope setState:NSOffState];
-		[currentProjectScope setState:NSOffState];
-		[allDocumentsScope setState:NSOffState];
-		[parentDirectoryScope setState:NSOnState];
+		[currentDocumentScope setState:NSControlStateValueOff];
+		[currentProjectScope setState:NSControlStateValueOff];
+		[allDocumentsScope setState:NSControlStateValueOff];
+		[parentDirectoryScope setState:NSControlStateValueOn];
 	}
 	
 	[FRADefaults setValue:[NSNumber numberWithInteger:searchScope] forKey:@"AdvancedFindScope"];

@@ -16,7 +16,8 @@ import Foundation
 class FRAHelpMenuController : NSObject {
     
     @IBAction func erbeleHelp(_ sender: Any) {
-        NSWorkspace.shared.openFile(Bundle.main.path(forResource: "Erbele-Manual", ofType: "pdf")!)
+        guard let url = Bundle.main.url(forResource: "Erbele-Manual", withExtension: "pdf") else { return }
+        NSWorkspace.shared.open(url)
     }
 }
 

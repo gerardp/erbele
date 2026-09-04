@@ -12,6 +12,7 @@
 */
 
 #import "FRAServicesController.h"
+#import "FRAPasteboard.h"
 #import "FRAProjectsController.h"
 #import "FRAOpenSavePerformer.h"
 #import "FRAProject.h"
@@ -42,7 +43,7 @@ static id sharedInstance = nil;
 
 - (void)insertSelection:(NSPasteboard *)pboard userData:(NSString *)data error:(NSString **)error 
 {
-	if (![[pboard types] containsObject:NSStringPboardType]) {
+	if (![[pboard types] containsObject:NSPasteboardTypeString]) {
 		NSBeep();
 		return;
 	}
@@ -54,7 +55,7 @@ static id sharedInstance = nil;
 			[[FRAProjectsController sharedDocumentController] newDocument:nil];
 		}
 	}
-	if (![[FRACurrentDocument valueForKey:@"firstTextView"] readSelectionFromPasteboard:pboard type:NSStringPboardType]) {
+	if (![[FRACurrentDocument valueForKey:@"firstTextView"] readSelectionFromPasteboard:pboard type:NSPasteboardTypeString]) {
 		NSBeep();
 	}
 }
@@ -62,7 +63,7 @@ static id sharedInstance = nil;
 
 - (void)openSelection:(NSPasteboard *)pboard userData:(NSString *)data error:(NSString **)error 
 {
-	if (![[pboard types] containsObject:NSStringPboardType]) {
+	if (![[pboard types] containsObject:NSPasteboardTypeString]) {
 		NSBeep();
 		return;
 	}
@@ -77,7 +78,7 @@ static id sharedInstance = nil;
 	
 	id document = [FRACurrentProject createNewDocumentWithContents:@""];
 
-	if (![[document valueForKey:@"firstTextView"] readSelectionFromPasteboard:pboard type:NSStringPboardType]) {
+	if (![[document valueForKey:@"firstTextView"] readSelectionFromPasteboard:pboard type:NSPasteboardTypeString]) {
 		NSBeep();
 	}
 }
@@ -85,12 +86,12 @@ static id sharedInstance = nil;
 
 - (void)openFile:(NSPasteboard *)pboard userData:(NSString *)data error:(NSString **)error
 {
-	if (![[pboard types] containsObject:NSFilenamesPboardType]) {
+	NSString *path = [FRAFilePathsFromPasteboard(pboard) firstObject];
+	if (!path) {
 		NSBeep();
 		return;
 	}
 	
-	NSString *path = [pboard propertyListForType:NSFilenamesPboardType][0];
 	[FRAOpenSave shouldOpen:path withEncoding:0];
 }
 

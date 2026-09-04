@@ -152,13 +152,20 @@
 		}
 	}
 	
+    NSError *error = nil;
+    NSData *data = [NSData dataWithContentsOfFile:path options:0 error:&error];
+    id projectToOpen = data ? FRAReadProjectArchive(data, &error) : nil;
+    if (!projectToOpen) {
+        [NSApp presentError:error];
+        return;
+    }
+
 	id project = [self openUntitledDocumentAndDisplay:NO error:nil];
 	[self setCurrentProject:project];
 	[project makeWindowControllers];
 
 	[project setFileURL:[NSURL fileURLWithPath:path]];
 	[[project project] setValue:path forKey:@"path"];
-	id projectToOpen = [NSUnarchiver unarchiveObjectWithData:[NSData dataWithContentsOfFile:path]];
 	
 	if ([projectToOpen isKindOfClass:[NSArray class]]) { // From version 2
 		[self insertDocumentsFromProjectArray:projectToOpen];

@@ -14,7 +14,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface FRAFileMenuController : NSObject
+@interface FRAFileMenuController : NSObject <NSMenuItemValidation>
 {
 }
 @property (strong) NSOpenPanel *openPanel;

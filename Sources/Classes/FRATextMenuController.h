@@ -13,7 +13,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface FRATextMenuController : NSObject
+@interface FRATextMenuController : NSObject <NSMenuItemValidation>
 {
 	IBOutlet NSMenu *textEncodingMenu;
 	IBOutlet NSMenu *reloadTextWithEncodingMenu;	

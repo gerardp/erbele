@@ -193,23 +193,23 @@ static void * const FRAMultiLineChangedContext = (void *)&FRAMultiLineChangedCon
 
 - (void)setColours
 {
-    commandsColour = @{NSForegroundColorAttributeName: [NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:[ FRABasic lightDarkPreference: @"CommandsColourWell"] ]]};
+    commandsColour = @{NSForegroundColorAttributeName: [FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:[ FRABasic lightDarkPreference: @"CommandsColourWell"] ]]};
     
-    commentsColour = @{NSForegroundColorAttributeName: [NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:[ FRABasic lightDarkPreference: @"CommentsColourWell" ] ]]};
+    commentsColour = @{NSForegroundColorAttributeName: [FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:[ FRABasic lightDarkPreference: @"CommentsColourWell" ] ]]};
     
-    instructionsColour = @{NSForegroundColorAttributeName: [NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:[ FRABasic lightDarkPreference: @"InstructionsColourWell"] ]]};
+    instructionsColour = @{NSForegroundColorAttributeName: [FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:[ FRABasic lightDarkPreference: @"InstructionsColourWell"] ]]};
     
-    keywordsColour = @{NSForegroundColorAttributeName: [NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:[ FRABasic lightDarkPreference: @"KeywordsColourWell"] ]]};
+    keywordsColour = @{NSForegroundColorAttributeName: [FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:[ FRABasic lightDarkPreference: @"KeywordsColourWell"] ]]};
     
-    autocompleteWordsColour = @{NSForegroundColorAttributeName: [NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:[ FRABasic lightDarkPreference: @"AutocompleteColourWell"] ]]};
+    autocompleteWordsColour = @{NSForegroundColorAttributeName: [FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:[ FRABasic lightDarkPreference: @"AutocompleteColourWell"] ]]};
     
-    stringsColour = @{NSForegroundColorAttributeName: [NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:[ FRABasic lightDarkPreference: @"StringsColourWell"] ]]};
+    stringsColour = @{NSForegroundColorAttributeName: [FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:[ FRABasic lightDarkPreference: @"StringsColourWell"] ]]};
     
-    variablesColour = @{NSForegroundColorAttributeName: [NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:[ FRABasic lightDarkPreference: @"VariablesColourWell"] ]]};
+    variablesColour = @{NSForegroundColorAttributeName: [FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:[ FRABasic lightDarkPreference: @"VariablesColourWell"] ]]};
     
-    attributesColour = @{NSForegroundColorAttributeName: [NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:[ FRABasic lightDarkPreference: @"AttributesColourWell"] ]]};
+    attributesColour = @{NSForegroundColorAttributeName: [FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:[ FRABasic lightDarkPreference: @"AttributesColourWell"] ]]};
     
-    lineHighlightColour = @{NSBackgroundColorAttributeName: [NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey: [ FRABasic lightDarkPreference: @"HighlightLineColourWell"] ]]};
+    lineHighlightColour = @{NSBackgroundColorAttributeName: [FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey: [ FRABasic lightDarkPreference: @"HighlightLineColourWell"] ]]};
 }
 
 

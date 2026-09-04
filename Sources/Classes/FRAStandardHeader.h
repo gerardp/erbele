@@ -25,6 +25,7 @@
 #define ERBELE_ERROR_DOMAIN @"org.erbele.Erbele.ErrorDomain"
 
 #import <Cocoa/Cocoa.h>
+#import "FRAArchive.h"
 #import <Carbon/Carbon.h>
 
 #import <SystemConfiguration/SCNetwork.h>

@@ -464,7 +464,7 @@ static id sharedInstance = nil;
 
 	if ([allFunctions count] == 0) {
 		NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Not applicable", @"Not applicable in insertAllFunctionsIntoMenu") action:nil keyEquivalent:@""];
-		[menuItem setState:NSOffState];
+		[menuItem setState:NSControlStateValueOff];
 		[menu insertItem:menuItem atIndex:0];
 		return;
 	}		
@@ -491,7 +491,7 @@ static id sharedInstance = nil;
 		[menuItem setAction:@selector(goToFunctionOnLine:)];
 		[menuItem setTag:lineNumber];
 		if (index == currentFunctionIndex) {
-			[menuItem setState:NSOnState];
+			[menuItem setState:NSControlStateValueOn];
 		}
 		index--;
 		[menu insertItem:menuItem atIndex:0];

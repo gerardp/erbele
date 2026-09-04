@@ -13,7 +13,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface FRAViewMenuController : NSObject
+@interface FRAViewMenuController : NSObject <NSMenuItemValidation>
 {
 }
 

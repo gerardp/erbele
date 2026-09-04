@@ -238,7 +238,7 @@ static id sharedInstance = nil;
 		return;
 	}
 	
-	NSColor *colour = [[sender color] colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
+	NSColor *colour = [[sender color] colorUsingColorSpace:[NSColorSpace genericRGBColorSpace]];
 	
 	NSUInteger red = (NSUInteger)([colour redComponent] * 255);
 	NSUInteger green = (NSUInteger)([colour greenComponent] * 255);

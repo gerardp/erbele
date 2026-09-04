@@ -13,7 +13,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface FRAPreferencesController : NSObject <NSToolbarDelegate, NSWindowDelegate, NSTabViewDelegate>
+@interface FRAPreferencesController : NSObject <NSToolbarDelegate, NSWindowDelegate, NSTabViewDelegate, NSFontChanging>
 {
 	NSToolbar *preferencesToolbar;
 	

@@ -57,13 +57,17 @@
         
         NSInteger marginsMin = [[FRADefaults valueForKey:@"MarginsMin"] integerValue];
 		
-		[self lockFocus];
+        [NSGraphicsContext saveGraphicsState];
+        CGContextRef context = [NSGraphicsContext currentContext].CGContext;
+        CGContextTranslateCTM(context, 0, borderSize.height);
+        CGContextScaleCTM(context, 1, -1);
+        [NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithCGContext:context flipped:YES]];
 		[headerString drawAtPoint:NSMakePoint([printInfo leftMargin], marginsMin)
                    withAttributes:@{NSFontAttributeName: [NSFont systemFontOfSize:10.0]}];
 		[NSBezierPath setDefaultLineWidth:1.0];
 		[NSBezierPath strokeLineFromPoint:NSMakePoint([printInfo leftMargin], marginsMin + 14)
                                   toPoint:NSMakePoint([printInfo paperSize].width - [printInfo leftMargin], marginsMin + 14)];
-		[self unlockFocus];
+        [NSGraphicsContext restoreGraphicsState];
 	}
 }
 
@@ -82,7 +86,7 @@
 - (BOOL)knowsPageRange:(NSRangePointer)range {
     NSPrintInfo *printInfo = [[NSPrintOperation currentOperation] printInfo];
 
-    [self setFont:[NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:@"PrintFont"]]];
+    [self setFont:[FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:@"PrintFont"]]];
     
     [self setFrame:NSMakeRect([printInfo leftMargin], [printInfo bottomMargin], [printInfo paperSize].width - [printInfo leftMargin] - [printInfo rightMargin], [printInfo paperSize].height - [printInfo topMargin] - [printInfo bottomMargin])];
 
@@ -163,7 +167,7 @@
 	while (numberOfSpaces--) {
 		[sizeString appendString:@" "];
 	}
-	NSDictionary *sizeAttribute = @{NSFontAttributeName: [NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:@"PrintFont"]]};
+	NSDictionary *sizeAttribute = @{NSFontAttributeName: [FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:@"PrintFont"]]};
 	CGFloat sizeOfTab = [sizeString sizeWithAttributes:sizeAttribute].width;
 	
 	NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];

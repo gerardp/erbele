@@ -304,9 +304,9 @@ static id sharedInstance = nil;
 
 - (void)changeFont:(id)sender // When you change the font in the print panel
 {
-    NSFont *oldFont = [NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:@"PrintFont"]];
+    NSFont *oldFont = [FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:@"PrintFont"]];
     NSFont *panelFont = [sender convertFont:oldFont];
-	[FRADefaults setValue:[NSArchiver archivedDataWithRootObject:panelFont] forKey:@"PrintFont"];
+	[FRADefaults setValue:[NSKeyedArchiver archivedDataWithRootObject:panelFont requiringSecureCoding:YES error:nil] forKey:@"PrintFont"];
 }
 
 

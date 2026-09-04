@@ -28,9 +28,9 @@
 {
 	if (self == [[FRACommandsController sharedInstance] commandCollectionsTableView] || self == [[FRACommandsController sharedInstance] commandsTableView] || self == [[FRASnippetsController sharedInstance] snippetCollectionsTableView] || self == [[FRASnippetsController sharedInstance] snippetsTableView] || self == [FRACurrentProject documentsTableView]) {
 	
-		unichar key = [[event charactersIgnoringModifiers] characterAtIndex:0];
+		unichar key = event.charactersIgnoringModifiers.length ? [event.charactersIgnoringModifiers characterAtIndex:0] : 0;
 		NSInteger keyCode = [event keyCode];
-		NSUInteger flags = ([event modifierFlags] & 0x00FF);
+		NSUInteger flags = event.modifierFlags & (NSEventModifierFlagCommand | NSEventModifierFlagOption | NSEventModifierFlagControl | NSEventModifierFlagShift);
 		
 		if ((key == NSDeleteCharacter || keyCode == 0x75) && flags == 0) { // 0x75 is forward delete 
 			if ([self selectedRow] == -1) {
@@ -107,6 +107,8 @@
 					[FRACurrentProject checkIfDocumentIsUnsaved:document keepOpen:NO];
 				}
 			}
+		} else {
+			[super keyDown:event];
 		}
 		
 	} else {
@@ -114,15 +116,12 @@
 	}
 }
 
-- (void)textDidEndEditing:(NSNotification *)aNotification
+- (NSInteger)editingColumn
 {
-	if ([[aNotification userInfo][@"NSTextMovement"] integerValue] == NSReturnTextMovement) {
-		[[self window] endEditingFor:self];
-		[self reloadData];
-		[[self window] makeFirstResponder:self];
-	} else {
-		[super textDidEndEditing:aNotification];
-	}
+    NSResponder *responder = self.window.firstResponder;
+    if (![responder isKindOfClass:[NSTextView class]]) return -1;
+    id field = [(NSTextView *)responder delegate];
+    return [field isKindOfClass:[NSTextField class]] ? [self columnForView:field] : -1;
 }
 
 @end

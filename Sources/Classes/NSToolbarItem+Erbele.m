@@ -26,7 +26,7 @@
 	
 	NSView *view = [[NSView alloc] initWithFrame:toolbarItemRect];
 	NSButton *button = [[NSButton alloc] initWithFrame:toolbarItemRect];
-	[button setBezelStyle:NSTexturedRoundedBezelStyle];
+	[button setBezelStyle:NSBezelStyleToolbar];
 	[button setTitle:@""];
     [button setImage:[NSImage toolbarSymbolNamed:symbolName label:name]];
 	[button setTarget:target];

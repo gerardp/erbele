@@ -70,23 +70,23 @@ static id sharedInstance = nil;
 {
 	NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
     
-	dictionary[@"CommandsColourWell"] = [NSArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.0 green:0.0 blue:0.97 alpha:1.0]];
-	dictionary[@"CommentsColourWell"] = [NSArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.0 green:0.69 blue:0.001 alpha:1.0]];
-	dictionary[@"InstructionsColourWell"] = [NSArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.45 green:0.45 blue:0.45 alpha:1.0]];
-	dictionary[@"KeywordsColourWell"] = [NSArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.84 green:0.41 blue:0.006 alpha:1.0]];
-	dictionary[@"AutocompleteColourWell"] = [NSArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.84 green:0.41 blue:0.006 alpha:1.0]];
-	dictionary[@"VariablesColourWell"] = [NSArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.73 green:0.0 blue:0.74 alpha:1.0]];
-	dictionary[@"StringsColourWell"] = [NSArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.95 green:0.0 blue:0.0 alpha:1.0]];
-	dictionary[@"AttributesColourWell"] = [NSArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.50 green:0.5 blue:0.2 alpha:1.0]];
+	dictionary[@"CommandsColourWell"] = [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.0 green:0.0 blue:0.97 alpha:1.0] requiringSecureCoding:YES error:nil];
+	dictionary[@"CommentsColourWell"] = [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.0 green:0.69 blue:0.001 alpha:1.0] requiringSecureCoding:YES error:nil];
+	dictionary[@"InstructionsColourWell"] = [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.45 green:0.45 blue:0.45 alpha:1.0] requiringSecureCoding:YES error:nil];
+	dictionary[@"KeywordsColourWell"] = [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.84 green:0.41 blue:0.006 alpha:1.0] requiringSecureCoding:YES error:nil];
+	dictionary[@"AutocompleteColourWell"] = [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.84 green:0.41 blue:0.006 alpha:1.0] requiringSecureCoding:YES error:nil];
+	dictionary[@"VariablesColourWell"] = [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.73 green:0.0 blue:0.74 alpha:1.0] requiringSecureCoding:YES error:nil];
+	dictionary[@"StringsColourWell"] = [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.95 green:0.0 blue:0.0 alpha:1.0] requiringSecureCoding:YES error:nil];
+	dictionary[@"AttributesColourWell"] = [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.50 green:0.5 blue:0.2 alpha:1.0] requiringSecureCoding:YES error:nil];
 
-    dictionary[DARK_MODE @"CommandsColourWell"] = [NSArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.4 green:0.5 blue:1.0 alpha:1.0]];
-    dictionary[DARK_MODE @"CommentsColourWell"] = [NSArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.0 green:0.69 blue:0.001 alpha:1.0]];
-    dictionary[DARK_MODE @"InstructionsColourWell"] = [NSArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.45 green:0.45 blue:0.45 alpha:1.0]];
-    dictionary[DARK_MODE @"KeywordsColourWell"] = [NSArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.84 green:0.41 blue:0.0 alpha:1.0]];
-    dictionary[DARK_MODE @"AutocompleteColourWell"] = [NSArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.84 green:0.41 blue:0.0 alpha:1.0]];
-    dictionary[DARK_MODE @"VariablesColourWell"] = [NSArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.73 green:0.0 blue:0.74 alpha:1.0]];
-    dictionary[DARK_MODE @"StringsColourWell"] = [NSArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.95 green:0.0 blue:0.0 alpha:1.0]];
-    dictionary[DARK_MODE @"AttributesColourWell"] = [NSArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.65 green:0.55 blue:0.15 alpha:1.0]];
+    dictionary[DARK_MODE @"CommandsColourWell"] = [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.4 green:0.5 blue:1.0 alpha:1.0] requiringSecureCoding:YES error:nil];
+    dictionary[DARK_MODE @"CommentsColourWell"] = [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.0 green:0.69 blue:0.001 alpha:1.0] requiringSecureCoding:YES error:nil];
+    dictionary[DARK_MODE @"InstructionsColourWell"] = [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.45 green:0.45 blue:0.45 alpha:1.0] requiringSecureCoding:YES error:nil];
+    dictionary[DARK_MODE @"KeywordsColourWell"] = [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.84 green:0.41 blue:0.0 alpha:1.0] requiringSecureCoding:YES error:nil];
+    dictionary[DARK_MODE @"AutocompleteColourWell"] = [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.84 green:0.41 blue:0.0 alpha:1.0] requiringSecureCoding:YES error:nil];
+    dictionary[DARK_MODE @"VariablesColourWell"] = [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.73 green:0.0 blue:0.74 alpha:1.0] requiringSecureCoding:YES error:nil];
+    dictionary[DARK_MODE @"StringsColourWell"] = [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.95 green:0.0 blue:0.0 alpha:1.0] requiringSecureCoding:YES error:nil];
+    dictionary[DARK_MODE @"AttributesColourWell"] = [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.65 green:0.55 blue:0.15 alpha:1.0] requiringSecureCoding:YES error:nil];
 
     dictionary[@"ColourCommands"] = @YES;
 	dictionary[@"ColourComments"] = @YES;
@@ -97,20 +97,20 @@ static id sharedInstance = nil;
 	dictionary[@"ColourStrings"] = @YES;
 	dictionary[@"ColourAttributes"] = @YES;
 	
-	dictionary[@"BackgroundColourWell"] = [NSArchiver archivedDataWithRootObject:[NSColor whiteColor]];
-	dictionary[@"TextColourWell"] = [NSArchiver archivedDataWithRootObject:[NSColor blackColor]];
-	dictionary[@"InvisibleCharactersColourWell"] = [NSArchiver archivedDataWithRootObject:[NSColor blackColor]];
-	dictionary[@"HighlightLineColourWell"] = [NSArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.96 green:0.96 blue:0.71 alpha:1.0]];
+	dictionary[@"BackgroundColourWell"] = [NSKeyedArchiver archivedDataWithRootObject:[NSColor whiteColor] requiringSecureCoding:YES error:nil];
+	dictionary[@"TextColourWell"] = [NSKeyedArchiver archivedDataWithRootObject:[NSColor blackColor] requiringSecureCoding:YES error:nil];
+	dictionary[@"InvisibleCharactersColourWell"] = [NSKeyedArchiver archivedDataWithRootObject:[NSColor blackColor] requiringSecureCoding:YES error:nil];
+	dictionary[@"HighlightLineColourWell"] = [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.96 green:0.96 blue:0.71 alpha:1.0] requiringSecureCoding:YES error:nil];
 	
-    dictionary[DARK_MODE @"BackgroundColourWell"] = [NSArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.13 green:0.16 blue:0.18 alpha:1.0]];
-    dictionary[DARK_MODE @"TextColourWell"] = [NSArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.54 green:0.88 blue:0.67 alpha:1.0]];
-    dictionary[DARK_MODE @"InvisibleCharactersColourWell"] = [NSArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.29 green:0.6 blue:0.1 alpha:1.0]];
-    dictionary[DARK_MODE @"HighlightLineColourWell"] = [NSArchiver archivedDataWithRootObject: [NSColor colorWithCalibratedRed:0.15 green:0.26 blue:0.08 alpha:1.0]];
+    dictionary[DARK_MODE @"BackgroundColourWell"] = [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.13 green:0.16 blue:0.18 alpha:1.0] requiringSecureCoding:YES error:nil];
+    dictionary[DARK_MODE @"TextColourWell"] = [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.54 green:0.88 blue:0.67 alpha:1.0] requiringSecureCoding:YES error:nil];
+    dictionary[DARK_MODE @"InvisibleCharactersColourWell"] = [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.29 green:0.6 blue:0.1 alpha:1.0] requiringSecureCoding:YES error:nil];
+    dictionary[DARK_MODE @"HighlightLineColourWell"] = [NSKeyedArchiver archivedDataWithRootObject: [NSColor colorWithCalibratedRed:0.15 green:0.26 blue:0.08 alpha:1.0] requiringSecureCoding:YES error:nil];
 
-    dictionary[@"GutterBackgroundColourWell"] = [NSArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedWhite:0.94 alpha:1.0]];
-    dictionary[@"GutterTextColourWell"] = [NSArchiver archivedDataWithRootObject:[NSColor textColor]];
-    dictionary[DARK_MODE @"GutterBackgroundColourWell"] = [NSArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.17 green:0.2 blue:0.2 alpha:1.0]];
-    dictionary[DARK_MODE @"GutterTextColourWell"] = [NSArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.42 green:0.56 blue:0.46 alpha:1.0]];
+    dictionary[@"GutterBackgroundColourWell"] = [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedWhite:0.94 alpha:1.0] requiringSecureCoding:YES error:nil];
+    dictionary[@"GutterTextColourWell"] = [NSKeyedArchiver archivedDataWithRootObject:[NSColor textColor] requiringSecureCoding:YES error:nil];
+    dictionary[DARK_MODE @"GutterBackgroundColourWell"] = [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.17 green:0.2 blue:0.2 alpha:1.0] requiringSecureCoding:YES error:nil];
+    dictionary[DARK_MODE @"GutterTextColourWell"] = [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithCalibratedRed:0.42 green:0.56 blue:0.46 alpha:1.0] requiringSecureCoding:YES error:nil];
     
     dictionary[@"EncodingsMatrix"] = @0;
 	dictionary[@"OpenMatrix"] = @(FRAOpenSaveRemember);
@@ -131,7 +131,7 @@ static id sharedInstance = nil;
 	
 	dictionary[@"AutocompleteAfterDelay"] = @0.5;
 	
-	dictionary[@"TextFont"] = [NSArchiver archivedDataWithRootObject:[NSFont fontWithName:@"Menlo" size:11]];
+	dictionary[@"TextFont"] = [NSKeyedArchiver archivedDataWithRootObject:[NSFont fontWithName:@"Menlo" size:11] requiringSecureCoding:YES error:nil];
 	dictionary[@"OpenAlwaysUseTextField"] = [[NSString localizedStringWithFormat:@"%@/%@", NSHomeDirectory(), @"Desktop"] stringByAbbreviatingWithTildeInPath];
 	dictionary[@"SaveAsAlwaysUseTextField"] = [[NSString localizedStringWithFormat:@"%@/%@", NSHomeDirectory(), @"Desktop"] stringByAbbreviatingWithTildeInPath];
 	
@@ -193,7 +193,7 @@ static id sharedInstance = nil;
 	dictionary[@"SyntaxColouringPopUpString"] = @"Standard";
 	
 	dictionary[@"MarginsMin"] = @24;
-	dictionary[@"PrintFont"] = [NSArchiver archivedDataWithRootObject:[NSFont fontWithName:@"Courier" size:10]];
+	dictionary[@"PrintFont"] = [NSKeyedArchiver archivedDataWithRootObject:[NSFont fontWithName:@"Courier" size:10] requiringSecureCoding:YES error:nil];
 	
 	NSArray *activeEncodings = @[@(NSASCIIStringEncoding), @(NSJapaneseEUCStringEncoding), @(NSUTF8StringEncoding), @(NSISOLatin1StringEncoding), @(NSSymbolStringEncoding), @(NSNonLossyASCIIStringEncoding), @(NSShiftJISStringEncoding), @(NSISOLatin2StringEncoding), @(NSUnicodeStringEncoding), @(NSWindowsCP1251StringEncoding), @(NSWindowsCP1252StringEncoding), @(NSWindowsCP1253StringEncoding), @(NSWindowsCP1254StringEncoding), @(NSWindowsCP1250StringEncoding), @(NSISO2022JPStringEncoding), @(NSMacOSRomanStringEncoding)];
 	
@@ -226,6 +226,7 @@ static id sharedInstance = nil;
 	
 	NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
 	[defaultsController setInitialValues: dictionary];
+	[FRAPreferenceArchiveTransformer resetUnsupportedPreferencesInController:defaultsController];
 	
 	[defaultsController addObserver:self forKeyPath:@"values.StatusBarShowEncoding" options:NSKeyValueObservingOptionNew context:FRAStatusBarChangedContext];
 	[defaultsController addObserver:self forKeyPath:@"values.StatusBarShowLength" options:NSKeyValueObservingOptionNew context:FRAStatusBarChangedContext];
@@ -546,16 +547,16 @@ static id sharedInstance = nil;
 - (IBAction)setFontAction:(id)sender
 {
 	NSFontManager *fontManager = [NSFontManager sharedFontManager];
-	[fontManager setSelectedFont:[NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:@"TextFont"]] isMultiple:NO];
+	[fontManager setSelectedFont:[FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:@"TextFont"]] isMultiple:NO];
 	[fontManager orderFrontFontPanel:nil];
 }
 
 
 - (void)changeFont:(id)sender
 {
-    NSFont *oldFont = [NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:@"TextFont"]];
+    NSFont *oldFont = [FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:@"TextFont"]];
     NSFont *panelFont = [sender convertFont:oldFont];
-	[FRADefaults setValue:[NSArchiver archivedDataWithRootObject:panelFont] forKey:@"TextFont"];
+	[FRADefaults setValue:[NSKeyedArchiver archivedDataWithRootObject:panelFont requiringSecureCoding:YES error:nil] forKey:@"TextFont"];
 }
 
 

@@ -42,8 +42,8 @@ static void * const FRAGutterChangedContext = (void *)&FRAGutterChangedContext;
 		[self setHorizontallyResizable:YES];
 		[self setAutoresizingMask:NSViewHeightSizable];
 		
-		[self setFont:[NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:@"TextFont"]]];
-		[self setInsertionPointColor:[NSColor textColor]];//[NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:@"TextColourWell"]]];
+		[self setFont:[FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:@"TextFont"]]];
+		[self setInsertionPointColor:[NSColor textColor]];//[FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:@"TextColourWell"]]];
 		[self darkModeFix];
 
 		NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
@@ -59,8 +59,8 @@ static void * const FRAGutterChangedContext = (void *)&FRAGutterChangedContext;
 }
 
 -(void) darkModeFix {
-    [self setBackgroundColor: [NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:[ FRABasic lightDarkPreference: @"GutterBackgroundColourWell" ] ]]];
-    [self setTextColor: [NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey: [ FRABasic lightDarkPreference: @"GutterTextColourWell"] ]]];
+    [self setBackgroundColor: [FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:[ FRABasic lightDarkPreference: @"GutterBackgroundColourWell" ] ]]];
+    [self setTextColor: [FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey: [ FRABasic lightDarkPreference: @"GutterTextColourWell"] ]]];
 }
 -(void)darkModeChanged:(NSNotification *)notif {
     [self darkModeFix];
@@ -82,7 +82,7 @@ static void * const FRAGutterChangedContext = (void *)&FRAGutterChangedContext;
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
 	if (context == FRATextFontChangedContext) {
-		[self setFont:[NSUnarchiver unarchiveObjectWithData:[FRADefaults valueForKey:@"TextFont"]]];
+		[self setFont:[FRAPreferenceArchiveTransformer unarchiveObjectWithData:[FRADefaults valueForKey:@"TextFont"]]];
     } else if (context == FRAGutterChangedContext) {
         [self darkModeFix];
 	} else {

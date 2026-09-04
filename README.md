@@ -1,5 +1,8 @@
 # Erbele
 
+**Maintenance only:** Erbele is feature-complete. We will not add new features.
+Future updates will focus solely on keeping it compatible with the latest versions of macOS.
+
 Erbele is a feature-rich text editor for macOS: powerful but easy to use, with syntax
 highlighting for many languages, a project window for working on several documents at
 once, and a large set of tools for editing text.
@@ -41,18 +44,9 @@ The same window in German:
 
 ![Erbele, German](Docs/Erbele-screenshot_de.png)
 
-## Roadmap
-
-Fix bugs, improve what is already there and add the occasional feature, while keeping the
-original focus and feature set:
-
-* powerful, but easy to use
-* many helpful tools for editing text
-* support for many programming languages (syntax highlighting)
-
 ## Contributing
 
-Bug reports and ideas are welcome in the [issues list](https://github.com/gerardp/erbele/issues).
+macOS compatibility reports are welcome in the [issues list](https://github.com/gerardp/erbele/issues).
 
 English is the official language of this repository: code, comments, commit messages and
 issues are all written in English. See [AGENTS.md](AGENTS.md) for the project conventions.

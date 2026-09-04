@@ -123,9 +123,9 @@ static id sharedInstance = nil;
 			NSArray *subMenuArray = [NSArray arrayWithArray:[[anItem submenu] itemArray]];
 			id object;
 			for (object in subMenuArray) {
-				[object setState:NSOffState];
+				[object setState:NSControlStateValueOff];
 			}
-			[[[anItem submenu] itemWithTag:[[FRACurrentDocument valueForKey:@"encoding"] integerValue]] setState:NSOnState];
+			[[[anItem submenu] itemWithTag:[[FRACurrentDocument valueForKey:@"encoding"] integerValue]] setState:NSControlStateValueOn];
 		} else if (tag == 104) { // Encodings, reload
 			if ([[FRACurrentDocument valueForKey:@"isEdited"] boolValue] == YES || [FRACurrentDocument valueForKey:@"path"] == nil) {
 				return NO;
@@ -134,9 +134,9 @@ static id sharedInstance = nil;
 			NSArray *subMenuArray = [NSArray arrayWithArray:[[anItem submenu] itemArray]];
 			id object;
 			for (object in subMenuArray) {
-				[object setState:NSOffState];
+				[object setState:NSControlStateValueOff];
 			}
-			[[[anItem submenu] itemWithTag:[[FRACurrentDocument valueForKey:@"encoding"] integerValue]] setState:NSOnState];
+			[[[anItem submenu] itemWithTag:[[FRACurrentDocument valueForKey:@"encoding"] integerValue]] setState:NSControlStateValueOn];
 			
 		} else if (tag == 102) { // All items who should only be active if something is selected
 			if ([FRACurrentTextView selectedRange].length < 1) {
@@ -150,11 +150,11 @@ static id sharedInstance = nil;
 			NSArray *subMenuArray = [NSArray arrayWithArray:[[anItem submenu] itemArray]];
 			id object;
 			for (object in subMenuArray) {
-				[object setState:NSOffState];
+				[object setState:NSControlStateValueOff];
 			}
 			NSInteger lineEndings = [[FRACurrentDocument valueForKey:@"lineEndings"] integerValue];
 			if (lineEndings != 0) {
-				[[[anItem submenu] itemWithTag:(lineEndings + 150)] setState:NSOnState];
+				[[[anItem submenu] itemWithTag:(lineEndings + 150)] setState:NSControlStateValueOn];
 			}
 		} else if (tag == 112) { // Syntax Definition
 			NSArray *subMenuArray = [NSArray arrayWithArray:[[anItem submenu] itemArray]];
@@ -163,9 +163,9 @@ static id sharedInstance = nil;
 			NSString *syntaxDefinition = [document valueForKey:@"syntaxDefinition"];
 			for (item in subMenuArray) {
 				if ([[item title] isEqualToString:syntaxDefinition]) {
-					[item setState:NSOnState];
+					[item setState:NSControlStateValueOn];
 				} else {
-					[item setState:NSOffState];
+					[item setState:NSControlStateValueOff];
 				}
 			}
 		}

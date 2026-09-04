@@ -39,33 +39,55 @@
                                     <rect key="frame" x="1" y="0.0" width="179" height="385"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <tableView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" columnReordering="NO" columnSelection="YES" multipleSelection="NO" emptySelection="NO" autosaveName="CommandCollections" rowHeight="33" headerView="246" id="137" customClass="FRATableView">
-                                            <rect key="frame" x="0.0" y="0.0" width="179" height="368"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <size key="intercellSpacing" width="3" height="2"/>
-                                            <color key="backgroundColor" name="_sourceListBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                        <tableView viewBased="YES" focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" columnReordering="NO" columnSelection="YES" multipleSelection="NO" emptySelection="NO" autosaveName="CommandCollections" rowHeight="33" headerView="246" id="137" customClass="FRATableView">
+                                            <rect key="frame" x="0.0" y="0.0" width="179" height="368" />
+                                            <autoresizingMask key="autoresizingMask" />
+                                            <size key="intercellSpacing" width="3" height="2" />
+                                            <color key="backgroundColor" name="_sourceListBackgroundColor" catalog="System" colorSpace="catalog" />
+                                            <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog" />
                                             <tableColumns>
                                                 <tableColumn identifier="collection" width="175.97460000000001" minWidth="70.974609999999998" maxWidth="1000" id="138">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="Collections">
-                                                        <font key="font" metaFont="smallSystem"/>
-                                                        <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                                        <color key="backgroundColor" white="0.33333299" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <font key="font" metaFont="smallSystem" />
+                                                        <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog" />
+                                                        <color key="backgroundColor" white="0.33333299" alpha="1" colorSpace="calibratedWhite" />
                                                     </tableHeaderCell>
                                                     <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="240">
-                                                        <font key="font" metaFont="system"/>
-                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        <font key="font" metaFont="system" />
+                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog" />
+                                                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog" />
                                                     </textFieldCell>
-                                                    <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="name"/>
-                                                    <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
-                                                    <connections>
-                                                        <binding destination="9" name="value" keyPath="arrangedObjects.name" id="160"/>
-                                                    </connections>
+                                                    <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="name" />
+                                                    <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES" />
+                                                    <prototypeCellViews>
+                                                        <tableCellView identifier="collection" id="view-138" customClass="FRADocumentsListCell">
+                                                            <rect key="frame" x="0" y="0" width="175.9746" height="33.0" />
+                                                            <autoresizingMask key="autoresizingMask" />
+                                                            <subviews>
+                                                                <textField verticalHuggingPriority="750" fixedFrame="YES" id="field-138">
+                                                                    <rect key="frame" x="2" y="0" width="171.9746" height="17" />
+                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES" />
+                                                                    <textFieldCell key="cell" lineBreakMode="truncatingMiddle" selectable="YES" editable="YES" alignment="left" title="" id="cell-138">
+                                                                        <font key="font" metaFont="smallSystem" />
+                                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog" />
+                                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog" />
+                                                                    </textFieldCell>
+                                                                    <connections>
+                                                                        <binding destination="view-138" name="value" keyPath="objectValue.name" id="value-138" />
+                                                                    </connections>
+                                                                </textField>
+                                                            </subviews>
+                                                            <connections>
+                                                                <outlet property="textField" destination="field-138" id="text-outlet-138" />
+                                                            </connections>
+                                                        </tableCellView>
+                                                    </prototypeCellViews>
                                                 </tableColumn>
                                             </tableColumns>
                                             <connections>
-                                                <outlet property="delegate" destination="-2" id="211"/>
+                                                <binding destination="9" name="content" keyPath="arrangedObjects" id="table-137-content" />
+                                                <binding destination="9" name="selectionIndexes" keyPath="selectionIndexes" id="table-137-selectionIndexes" />
+                                                <binding destination="9" name="sortDescriptors" keyPath="sortDescriptors" id="table-137-sortDescriptors" />
                                             </connections>
                                         </tableView>
                                     </subviews>
@@ -95,79 +117,159 @@
                                             <rect key="frame" x="1" y="0.0" width="473" height="213"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <tableView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" emptySelection="NO" autosaveName="SelectedCommands3" headerView="251" id="140" customClass="FRATableView">
-                                                    <rect key="frame" x="0.0" y="0.0" width="473" height="196"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <size key="intercellSpacing" width="3" height="2"/>
-                                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                    <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                                <tableView viewBased="YES" focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" emptySelection="NO" autosaveName="SelectedCommands3" headerView="251" id="140" customClass="FRATableView">
+                                                    <rect key="frame" x="0.0" y="0.0" width="473" height="196" />
+                                                    <autoresizingMask key="autoresizingMask" />
+                                                    <size key="intercellSpacing" width="3" height="2" />
+                                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog" />
+                                                    <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog" />
                                                     <tableColumns>
                                                         <tableColumn identifier="name" width="171" minWidth="40" maxWidth="1000" id="141">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Name">
-                                                                <font key="font" metaFont="smallSystem"/>
-                                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                                                <color key="backgroundColor" white="0.33333299" alpha="1" colorSpace="calibratedWhite"/>
+                                                                <font key="font" metaFont="smallSystem" />
+                                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog" />
+                                                                <color key="backgroundColor" white="0.33333299" alpha="1" colorSpace="calibratedWhite" />
                                                             </tableHeaderCell>
                                                             <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="241">
-                                                                <font key="font" metaFont="system"/>
-                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                <font key="font" metaFont="system" />
+                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog" />
+                                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog" />
                                                             </textFieldCell>
-                                                            <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="name"/>
-                                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
-                                                            <connections>
-                                                                <binding destination="10" name="value" keyPath="arrangedObjects.name" id="162"/>
-                                                            </connections>
+                                                            <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="name" />
+                                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES" />
+                                                            <prototypeCellViews>
+                                                                <tableCellView identifier="name" id="view-141" customClass="FRADocumentsListCell">
+                                                                    <rect key="frame" x="0" y="0" width="171.0" height="17.0" />
+                                                                    <autoresizingMask key="autoresizingMask" />
+                                                                    <subviews>
+                                                                        <textField verticalHuggingPriority="750" fixedFrame="YES" id="field-141">
+                                                                            <rect key="frame" x="2" y="0" width="167.0" height="17" />
+                                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES" />
+                                                                            <textFieldCell key="cell" lineBreakMode="truncatingMiddle" selectable="YES" editable="YES" alignment="left" title="" id="cell-141">
+                                                                                <font key="font" metaFont="smallSystem" />
+                                                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog" />
+                                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog" />
+                                                                            </textFieldCell>
+                                                                            <connections>
+                                                                                <binding destination="view-141" name="value" keyPath="objectValue.name" id="value-141" />
+                                                                            </connections>
+                                                                        </textField>
+                                                                    </subviews>
+                                                                    <connections>
+                                                                        <outlet property="textField" destination="field-141" id="text-outlet-141" />
+                                                                    </connections>
+                                                                </tableCellView>
+                                                            </prototypeCellViews>
                                                         </tableColumn>
                                                         <tableColumn identifier="inline" width="44" minWidth="10" maxWidth="1000" id="188">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Inline">
-                                                                <font key="font" metaFont="smallSystem"/>
-                                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                                                <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                                                <font key="font" metaFont="smallSystem" />
+                                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog" />
+                                                                <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog" />
                                                             </tableHeaderCell>
                                                             <buttonCell key="dataCell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="210">
-                                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                                <font key="font" metaFont="cellTitle"/>
+                                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES" />
+                                                                <font key="font" metaFont="cellTitle" />
                                                             </buttonCell>
-                                                            <connections>
-                                                                <binding destination="10" name="value" keyPath="arrangedObjects.inline" id="191"/>
-                                                            </connections>
+                                                            <prototypeCellViews>
+                                                                <tableCellView identifier="inline" id="view-188">
+                                                                    <rect key="frame" x="0" y="0" width="44.0" height="17.0" />
+                                                                    <autoresizingMask key="autoresizingMask" />
+                                                                    <subviews>
+                                                                        <button fixedFrame="YES" id="field-188">
+                                                                            <rect key="frame" x="13.0" y="-0.5" width="18" height="18" />
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES" />
+                                                                            <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="cell-188">
+                                                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES" />
+                                                                                <font key="font" metaFont="cellTitle" />
+                                                                            </buttonCell>
+                                                                            <accessibility description="Inline" />
+                                                                            <connections>
+                                                                                <binding destination="view-188" name="value" keyPath="objectValue.inline" id="value-188" />
+                                                                            </connections>
+                                                                        </button>
+                                                                    </subviews>
+                                                                    <connections />
+                                                                </tableCellView>
+                                                            </prototypeCellViews>
                                                         </tableColumn>
                                                         <tableColumn identifier="interpreter" width="85" minWidth="10" maxWidth="1000" id="203">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Interpreter">
-                                                                <font key="font" metaFont="smallSystem"/>
-                                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                                                <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                                                <font key="font" metaFont="smallSystem" />
+                                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog" />
+                                                                <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog" />
                                                             </tableHeaderCell>
                                                             <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="243">
-                                                                <font key="font" metaFont="system"/>
-                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                <font key="font" metaFont="system" />
+                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog" />
+                                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog" />
                                                             </textFieldCell>
-                                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
-                                                            <connections>
-                                                                <binding destination="10" name="value" keyPath="arrangedObjects.interpreter" id="205"/>
-                                                            </connections>
+                                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES" />
+                                                            <prototypeCellViews>
+                                                                <tableCellView identifier="interpreter" id="view-203" customClass="FRADocumentsListCell">
+                                                                    <rect key="frame" x="0" y="0" width="85.0" height="17.0" />
+                                                                    <autoresizingMask key="autoresizingMask" />
+                                                                    <subviews>
+                                                                        <textField verticalHuggingPriority="750" fixedFrame="YES" id="field-203">
+                                                                            <rect key="frame" x="2" y="0" width="81.0" height="17" />
+                                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES" />
+                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="" id="cell-203">
+                                                                                <font key="font" metaFont="smallSystem" />
+                                                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog" />
+                                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog" />
+                                                                            </textFieldCell>
+                                                                            <connections>
+                                                                                <binding destination="view-203" name="value" keyPath="objectValue.interpreter" id="value-203" />
+                                                                            </connections>
+                                                                        </textField>
+                                                                    </subviews>
+                                                                    <connections>
+                                                                        <outlet property="textField" destination="field-203" id="text-outlet-203" />
+                                                                    </connections>
+                                                                </tableCellView>
+                                                            </prototypeCellViews>
                                                         </tableColumn>
                                                         <tableColumn identifier="shortcut" width="161.19820000000001" minWidth="52.698239999999998" maxWidth="1000" id="142">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Shortcut">
-                                                                <font key="font" metaFont="smallSystem"/>
-                                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                                                <color key="backgroundColor" white="0.33333299" alpha="1" colorSpace="calibratedWhite"/>
+                                                                <font key="font" metaFont="smallSystem" />
+                                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog" />
+                                                                <color key="backgroundColor" white="0.33333299" alpha="1" colorSpace="calibratedWhite" />
                                                             </tableHeaderCell>
                                                             <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="center" title="Text Cell" id="242">
-                                                                <font key="font" metaFont="system"/>
-                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                <font key="font" metaFont="system" />
+                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog" />
+                                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog" />
                                                             </textFieldCell>
-                                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
-                                                            <connections>
-                                                                <binding destination="10" name="value" keyPath="arrangedObjects.shortcutDisplayString" id="164"/>
-                                                            </connections>
+                                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES" />
+                                                            <prototypeCellViews>
+                                                                <tableCellView identifier="shortcut" id="view-142" customClass="FRADocumentsListCell">
+                                                                    <rect key="frame" x="0" y="0" width="161.1982" height="17.0" />
+                                                                    <autoresizingMask key="autoresizingMask" />
+                                                                    <subviews>
+                                                                        <textField verticalHuggingPriority="750" fixedFrame="YES" id="field-142">
+                                                                            <rect key="frame" x="2" y="0" width="157.1982" height="17" />
+                                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES" />
+                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="center" title="" id="cell-142">
+                                                                                <font key="font" metaFont="smallSystem" />
+                                                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog" />
+                                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog" />
+                                                                            </textFieldCell>
+                                                                            <connections>
+                                                                                <binding destination="view-142" name="value" keyPath="objectValue.shortcutDisplayString" id="value-142" />
+                                                                            </connections>
+                                                                        </textField>
+                                                                    </subviews>
+                                                                    <connections>
+                                                                        <outlet property="textField" destination="field-142" id="text-outlet-142" />
+                                                                    </connections>
+                                                                </tableCellView>
+                                                            </prototypeCellViews>
                                                         </tableColumn>
                                                     </tableColumns>
                                                     <connections>
-                                                        <outlet property="delegate" destination="-2" id="212"/>
+                                                        <binding destination="10" name="content" keyPath="arrangedObjects" id="table-140-content" />
+                                                        <binding destination="10" name="selectionIndexes" keyPath="selectionIndexes" id="table-140-selectionIndexes" />
+                                                        <binding destination="10" name="sortDescriptors" keyPath="sortDescriptors" id="table-140-sortDescriptors" />
                                                     </connections>
                                                 </tableView>
                                             </subviews>
@@ -204,7 +306,7 @@
                                                         <binding destination="10" name="value" keyPath="selection.text" id="167"/>
                                                         <binding destination="168" name="font" keyPath="values.TextFont" id="171">
                                                             <dictionary key="options">
-                                                                <string key="NSValueTransformerName">NSUnarchiveFromData</string>
+                                                                <string key="NSValueTransformerName">FRAPreferenceArchiveTransformer</string>
                                                             </dictionary>
                                                         </binding>
                                                     </connections>
@@ -249,7 +351,7 @@
                         <rect key="frame" x="240" y="5" width="76" height="11"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="%%s = selection" id="235">
                             <font key="font" metaFont="miniSystem"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
@@ -257,7 +359,7 @@
                         <rect key="frame" x="463" y="5" width="91" height="11"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="%%p = current path" id="236">
                             <font key="font" metaFont="miniSystem"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
@@ -265,7 +367,7 @@
                         <rect key="frame" x="334" y="5" width="111" height="11"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="%%d = current directory" id="237">
                             <font key="font" metaFont="miniSystem"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
@@ -273,7 +375,7 @@
                         <rect key="frame" x="89" y="5" width="133" height="11"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Include full path to command" id="238">
                             <font key="font" metaFont="miniSystem"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
